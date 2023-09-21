@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 public enum InjectedModifier: Codable {
-    case systemFont(stateId: String = "", nameId: String = "", description: String = "")
+    case systemFont(font: InjectedSystemFont)
     case font(stateId: String = "", nameId: String = "", sizeId: String = "", fontName: String? = nil, fontSize: Double? = nil)
     case fontWeight(weight: InjectedFontWeight)
     case width(stateId: String = "", widthId: String = "", width: Double? = nil)

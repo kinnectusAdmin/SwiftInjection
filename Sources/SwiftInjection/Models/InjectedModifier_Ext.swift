@@ -13,18 +13,10 @@ public extension View {
     
     func addModifier(modifier: InjectedModifier, state: CurrentValueSubject<InjectedState, Never>, container: ViewStoresContainer) -> some View {
         switch modifier {
-        case let .systemFont(stateId, descriptionId, description):
-            if let fontDescription = findStringValue(stateId: stateId, id: descriptionId, state: state.value), let injectedSystemFont = InjectedSystemFont(rawValue: fontDescription) {
-                return AnyView(
-                    self.font(injectedSystemFont.font)
-                )
-            } else if let injectedSystemFont = InjectedSystemFont(rawValue: description) {
-                return AnyView(
-                    self.font(injectedSystemFont.font)
-                )
-            } else {
-                return AnyView(self)
-            }
+        case .systemFont(let injectedSystemFont):
+            return AnyView(
+                self.font(injectedSystemFont.font)
+            )
         case let .font(stateId, nameId, sizeId, fontName, fontSize):
             //Route state value using statedi and id
             if let fontName = findStringValue(stateId: stateId, id: nameId, state: state.value), let fontSize = findDoubleValue(stateId: stateId, id: sizeId, state: state.value) {
@@ -38,7 +30,10 @@ public extension View {
             } else {
                 return AnyView(self)
             }
-            
+        case .fontWeight(let weight):
+            return AnyView(
+                self.fontWeight(weight.render)
+            )
         case let .width(stateId, widthId, width):
             //Route state value using statedi and id
             if let width = findDoubleValue(stateId: stateId, id: widthId, state: state.value) {
