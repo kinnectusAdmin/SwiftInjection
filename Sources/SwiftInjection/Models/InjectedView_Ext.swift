@@ -15,6 +15,9 @@ public extension InjectedView {
     public func font(stateId: String = "", nameId: String = "", sizeId: String = "", fontName: String? = nil, fontSize: Double? = nil) -> InjectedView {
         self.addModifier(modifier: .font(stateId: stateId, nameId: nameId, sizeId: sizeId, fontName: fontName, fontSize: fontSize))
     }
+    public func fontWeight(weight: InjectedFontWeight) -> InjectedView {
+        self.addModifier(modifier: .fontWeight(weight: weight))
+    }
     public func width(stateId: String = "", widthId: String = "", width: Double? = nil) -> InjectedView {
         self.addModifier(modifier: .width(stateId: stateId, widthId: widthId, width: width))
     }

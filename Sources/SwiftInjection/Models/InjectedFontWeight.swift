@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum InjectedFontWeight {
+public enum InjectedFontWeight: String, Codable {
     case black, bold, heavy, medium, semibold, light, regular, thin, ultraLight
     var render: Font.Weight {
         switch self {
@@ -32,5 +32,4 @@ enum InjectedFontWeight {
             return .ultraLight
         }
     }
-    
 }

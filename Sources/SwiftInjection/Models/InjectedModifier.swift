@@ -11,6 +11,7 @@ import SwiftUI
 public enum InjectedModifier: Codable {
     case systemFont(stateId: String = "", nameId: String = "", description: String = "")
     case font(stateId: String = "", nameId: String = "", sizeId: String = "", fontName: String? = nil, fontSize: Double? = nil)
+    case fontWeight(weight: InjectedFontWeight)
     case width(stateId: String = "", widthId: String = "", width: Double? = nil)
     case height(stateId: String = "", heightId: String = "", height: Double? = nil)
     case minWidth(stateId: String = "", widthId: String = "", width: Double? = nil)
