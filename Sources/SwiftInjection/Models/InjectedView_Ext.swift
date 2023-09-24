@@ -9,8 +9,8 @@ import Foundation
 
 public extension InjectedView {
     
-    public func systemFont(stateId: String = "", nameId: String = "", description: String = "") -> InjectedView {
-        self.addModifier(modifier: .systemFont(stateId: stateId, nameId: nameId, description: description))
+    public func systemFont(font: InjectedSystemFont) -> InjectedView {
+        self.addModifier(modifier: .systemFont(font: font))
     }
     public func font(stateId: String = "", nameId: String = "", sizeId: String = "", fontName: String? = nil, fontSize: Double? = nil) -> InjectedView {
         self.addModifier(modifier: .font(stateId: stateId, nameId: nameId, sizeId: sizeId, fontName: fontName, fontSize: fontSize))

@@ -234,8 +234,100 @@ public extension View {
             } else {
                 return AnyView(self)
             }
+        case let .bold(stateId, isActiveKey):
+            if let isBold = findBooleanValue(stateId: stateId, id: isActiveKey, state: state.value) {
+                return AnyView(self.bold(isBold))
+            } else {
+                return AnyView(self.bold())
+            }
+        case let .italic(stateId, isActiveKey):
+            if let isItalicized = findBooleanValue(stateId: stateId, id: isActiveKey, state: state.value) {
+                return AnyView(self.italic(isItalicized))
+            } else {
+                return AnyView(self.italic())
+            }
+        case .monoSpacedDigit:
+            return AnyView(self.monospacedDigit())
+        case let .monospaced(stateId, isActiveKey):
+            if let isActive = findBooleanValue(stateId: stateId, id: isActiveKey, state: state.value) {
+                return AnyView(self.monospaced(isActive))
+            } else {
+                return AnyView(self.monospaced())
+            }
+        case let .fontDesign(design):
+            if #available(iOS 16.1, *) {
+                return AnyView(self.fontDesign(design.render))
+            } else {
+                // Fallback on earlier versions
+                return AnyView(self)
+            }
+        case let .fontWidth(width):
+            return AnyView(self.fontWidth(width.render))
+        case let .spacingBetweenText(spacing):
+            return AnyView(self.kerning(CGFloat(spacing)))
+        case let .tracking(tracking):
+            return AnyView(self.tracking(CGFloat(tracking)))
+        case let .opacity(opacity):
+            return AnyView(self.opacity(CGFloat(opacity)))
+        case let .strikeThrough(stateId, isActiveKey, patternKey, pattern, colorKey, hexColor):
+            return AnyView(self.strikethrough())
+        case let .underline(stateId, isActiveKey, patternKey, pattern, colorKey, hexColor):
+            return AnyView(self)
+        case let .lineLimit(lowerRange, upperRange):
+            return AnyView(self)
+        case let .unredacted:
+            return AnyView(self)
+        case let .truncationMode(mode):
+            return AnyView(self)
+        case let .layoutPriority(priority):
+            return AnyView(self)
+        case let .tag(tag):
+            return AnyView(self)
+        case let .blendMode(injectedBlendMode):
+            return AnyView(self)
+        case let .fixedSize(horizontal, vertical):
+            return AnyView(self)
+        case let .multilineTextAlignment(alignment):
+            return AnyView(self)
+        case let .imageScale(scale):
+            return AnyView(self)
+        case let .minimumScaleFactor(factor):
+            return AnyView(self)
+        case let .animation(animation):
+            return AnyView(self)
+        case let .animationWithValue(animation, valueKey):
+            return AnyView(self)
+        case let .edgesIgnoringSafeArea(edges):
+            return AnyView(self)
+        case let .disabled(stateId, isDisabledKey: String):
+            return AnyView(self)
+        case let .buttonStyle(style):
+            return AnyView(self)
+        case let .position(x, y):
+            return AnyView(self)
+        case let .shadow(stateId, colorKey, radiusKey, xKey, yKey, colorHex, radius, x, y):
+            return AnyView(self)
+        case let .pickerStyle(style):
+            return AnyView(self)
+        case let .blur(stateId, radiusKey, isOpaqueKey, radius, isOpaque):
+            return AnyView(self)
+        case let .brightness(stateId, amountKey, amount):
+            return AnyView(self)
+        case let .textRenderingMode(injectedSymbolRenderingMode):
+            return AnyView(self)
+        case let .antiAliased(stateId, isAntiAliasedKey, isAntialised):
+            return AnyView(self)
+        case let .resizingable(capInsets, resizingMode):
+            return AnyView(self)
+        case let .imageRenderingMode(injectedImageRenderingMode):
+            return AnyView(self)
+        case .colorInvert:
+            return AnyView(self)
+        case let .colorMultiply(stateId, colorKey, colorHex):
+            return AnyView(self)
+        case let .datePickerStyle(injectdDatePickerStyle):
+            return AnyView(self)
         }
-        
     }
     
     
