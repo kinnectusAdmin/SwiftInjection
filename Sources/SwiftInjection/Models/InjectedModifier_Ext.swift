@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 
+
 public extension View {
     
     func addModifier(modifier: InjectedModifier, state: CurrentValueSubject<InjectedState, Never>, container: ViewStoresContainer) -> some View {
@@ -209,7 +210,7 @@ public extension View {
                 )
             }
         case let .alignment(stateId, alignmentId, alignment):
-            if let alignmentString = findStringValue(stateId: stateId, id: alignmentId, state: state.value), let alignment = ZStackAlignment(rawValue: alignmentString) {
+            if let alignment = findValue(type: ZStackAlignment.self, stateId: stateId, id: alignmentId, state: state.value) {
                 return AnyView(
                     self.frame(alignment: alignment.render)
                 )
@@ -223,7 +224,7 @@ public extension View {
                 )
             }
         case let .padding(stateId, edgeSetId, lengthId, edgeSet, length):
-            if let id = findStringValue(stateId: stateId, id: edgeSetId, state: state.value), let edgeSet = InjectedEdgeSet(rawValue: id) {
+            if let edgeSet = findValue(type: InjectedEdgeSet.self, stateId: stateId, id: edgeSetId, state: state.value){
                 return AnyView(
                     self.padding(edgeSet.render, CGFloat(findDoubleValue(stateId: stateId, id: lengthId, state: state.value) ?? 10))
                 )
@@ -270,63 +271,336 @@ public extension View {
         case let .opacity(opacity):
             return AnyView(self.opacity(CGFloat(opacity)))
         case let .strikeThrough(stateId, isActiveKey, patternKey, pattern, colorKey, hexColor):
-            return AnyView(self.strikethrough())
+            if let isActive = findBooleanValue(stateId: stateId, id: isActiveKey, state: state.value), let pattern = findValue(type: InjectedTextLineStylePattern.self, stateId: stateId, id: patternKey, state: state.value), let hexColor = findStringValue(stateId: stateId, id: colorKey, state: state.value) {
+                return AnyView(
+                    self.strikethrough(isActive, pattern: pattern.render, color: Color(UIColor.hex(hexColor)))
+                )
+            } else if let pattern = pattern, !hexColor.isEmpty{
+                return AnyView(
+                    self.strikethrough(pattern: pattern.render, color: Color(UIColor.hex(hexColor)))
+                )
+            } else {
+                return AnyView(self.strikethrough())
+            }
         case let .underline(stateId, isActiveKey, patternKey, pattern, colorKey, hexColor):
-            return AnyView(self)
-        case let .lineLimit(lowerRange, upperRange):
-            return AnyView(self)
-        case let .unredacted:
-            return AnyView(self)
+            if let isActive = findBooleanValue(stateId: stateId, id: isActiveKey, state: state.value), let pattern = findValue(type: InjectedTextLineStylePattern.self, stateId: stateId, id: patternKey, state: state.value), let hexColor = findStringValue(stateId: stateId, id: colorKey, state: state.value) {
+                return AnyView(
+                    self.underline(isActive, pattern: pattern.render, color: Color(UIColor.hex(hexColor)))
+                )
+            } else if let pattern = pattern, !hexColor.isEmpty{
+                return AnyView(
+                    self.underline(pattern: pattern.render, color: Color(UIColor.hex(hexColor)))
+                )
+            } else {
+                return AnyView(self.underline())
+            }
+        case let .lineLimit(stateId, limitKey, limit):
+            if let limit = findIntegerValue(stateId: stateId, id: limitKey, state: state.value) {
+                return AnyView(self.lineLimit(limit))
+            } else if let limit = limit {
+                return AnyView(self.lineLimit(limit))
+            } else {
+                return AnyView(self)
+            }
+        case .unredacted:
+            return AnyView(self.unredacted())
         case let .truncationMode(mode):
-            return AnyView(self)
+            return AnyView(self.truncationMode(mode.render))
         case let .layoutPriority(priority):
-            return AnyView(self)
+            return AnyView(self.layoutPriority(priority))
         case let .tag(tag):
-            return AnyView(self)
+            return AnyView(self.tag(tag))
         case let .blendMode(injectedBlendMode):
-            return AnyView(self)
-        case let .fixedSize(horizontal, vertical):
-            return AnyView(self)
+            return AnyView(self.blendMode(injectedBlendMode.render))
+        case let .fixedSize(isFixedHorizontally, isFixedVertically):
+            return AnyView(self.fixedSize(horizontal: isFixedHorizontally, vertical: isFixedVertically))
+        case .fixedSizeView:
+            return AnyView(self.fixedSize())
         case let .multilineTextAlignment(alignment):
-            return AnyView(self)
+            return AnyView(self.multilineTextAlignment(alignment.render))
         case let .imageScale(scale):
-            return AnyView(self)
+            return AnyView(self.imageScale(scale.render))
         case let .minimumScaleFactor(factor):
-            return AnyView(self)
-        case let .animation(animation):
-            return AnyView(self)
-        case let .animationWithValue(animation, valueKey):
-            return AnyView(self)
+            return AnyView(self.minimumScaleFactor(CGFloat(factor)))
+        case let .animation(stateId,  isActiveKey, animation):
+            //Need to figure out best use of this one 
+            if let isActive = findBooleanValue(stateId: stateId, id: isActiveKey, state: state.value) {
+                return AnyView(self.animation(animation.render, value: isActive))
+            } else {
+                return AnyView(self)
+            }
         case let .edgesIgnoringSafeArea(edges):
-            return AnyView(self)
-        case let .disabled(stateId, isDisabledKey: String):
-            return AnyView(self)
+            return AnyView(self.edgesIgnoringSafeArea(edges.render))
+        case let .disabled(stateId, isDisabledKey):
+            if let isDisabled = findBooleanValue(stateId: stateId, id: isDisabledKey, state: state.value){
+                return AnyView(self.disabled(isDisabled))
+            } else {
+                return AnyView(self)
+            }
         case let .buttonStyle(style):
-            return AnyView(self)
-        case let .position(x, y):
-            return AnyView(self)
+            return AnyView(self.buttonStyle(style.render).eraseToAnyView())
+        case let .position(stateId, xKey, yKey, x, y):
+            let xPosition = findDoubleValue(stateId: stateId, id: xKey, state: state.value)
+            let yPosition = findDoubleValue(stateId: stateId, id: yKey, state: state.value)
+            switch (xPosition, yPosition) {
+            case (.some(let position), .none):
+                return AnyView(self.position(x: position))
+            case (.none, .some(let position)):
+                return AnyView(self.position(y: position))
+            case (.some(let positionX), .some(let positionY)):
+                return AnyView(self.position(x: positionX, y: positionY))
+            case (.none, .none):
+                switch (x, y) {
+                case (.some(let position), .none):
+                    return AnyView(self.position(x: position))
+                case (.none, .some(let position)):
+                    return AnyView(self.position(y: position))
+                case (.some(let positionX), .some(let positionY)):
+                    return AnyView(self.position(x: positionX, y: positionY))
+                case (.none, .none):
+                    return AnyView(self)
+                }
+            }
         case let .shadow(stateId, colorKey, radiusKey, xKey, yKey, colorHex, radius, x, y):
-            return AnyView(self)
+            let stateRadius = findDoubleValue(stateId: stateId, id: radiusKey, state: state.value)
+            let stateColor = findStringValue(stateId: stateId, id: colorKey, state: state.value)
+            let stateXPosition = findDoubleValue(stateId: stateId, id: xKey, state: state.value)
+            let stateYPosition = findDoubleValue(stateId: stateId, id: yKey, state: state.value)
+            switch (stateRadius, stateColor, stateXPosition, stateYPosition) {
+            case (.some(let radius), .none, .some(let xPosition), .some(let yPosition)):
+                return AnyView(
+                    self.shadow(radius: CGFloat(radius),
+                                x: CGFloat(xPosition),
+                                y: CGFloat(yPosition))
+                )
+            case (.some(let radius), .none, .none, .some(let yPosition)):
+                return AnyView(
+                    self.shadow(radius: CGFloat(radius),
+                                y: CGFloat(yPosition))
+                )
+            case (.some(let radius), .none, .none, .none):
+                return AnyView(
+                    self.shadow(radius: CGFloat(radius))
+                )
+            case (.none, .some(let colorHex), .some(let xPosition), .some(let yPosition)):
+                return AnyView(
+                    self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                radius: 0,
+                                x: CGFloat(xPosition),
+                                y: CGFloat(yPosition))
+                )
+            case (.none, .some(let colorHex), .none, .some):
+                return AnyView(
+                    self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                radius: 0)
+                )
+            case (.none, .some(let colorHex), .none, .none):
+                return AnyView(self.shadow(color: Color(uiColor: UIColor.hex(colorHex)), radius: 0))
+            case (.none, .none, .some(let xPosition), .none):
+                return AnyView(
+                    self.shadow(radius: 0,
+                                x: CGFloat(xPosition))
+                )
+            case (.some(let radius), .some(let colorHex), .none, .none):
+                return AnyView(
+                    self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                radius: CGFloat(radius))
+                )
+            case (.some(let radius), .some(let colorHex), .some(let xPosition), .none):
+                return AnyView(
+                    self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                radius: CGFloat(radius),
+                                x: CGFloat(xPosition))
+                )
+            case (.some(let radius), .some(let colorHex), .some(let xPosition), .some(let yPosition)):
+                return AnyView(
+                    self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                radius: CGFloat(radius),
+                                x: CGFloat(xPosition),
+                                y: CGFloat(yPosition))
+                )
+            case (.none, .none, .some(let xPosition), .some(let yPosition)):
+                return AnyView(
+                    self.shadow(radius: 0,
+                                x: CGFloat(xPosition),
+                                y: CGFloat(yPosition))
+                )
+            case (.none, .none, .none, .some(let yPosition)):
+                return AnyView(
+                    self.shadow(radius: 0,
+                                y: CGFloat(yPosition))
+                )
+            case (.none, .some(let colorHex), .some(let xPosition), .none):
+                return AnyView(
+                    self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                radius: 0,
+                                x: CGFloat(xPosition))
+                )
+            case (.some(let radius), .some(let colorHex), .none, .some(let yPosition)):
+                return AnyView(
+                    self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                radius: CGFloat(radius),
+                                y: CGFloat(yPosition))
+                )
+            case (.some(let radius), .none, .some(let xPosition), .none):
+                return AnyView(
+                    self.shadow(radius: CGFloat(radius), x: CGFloat(xPosition))
+                )
+            case (.none, .none, .none, .none):
+                switch (radius, colorHex, x, y) {
+                case (.some(let radius), .none, .some(let xPosition), .some(let yPosition)):
+                    return AnyView(
+                        self.shadow(radius: CGFloat(radius),
+                                    x: CGFloat(xPosition),
+                                    y: CGFloat(yPosition))
+                    )
+                case (.some(let radius), .none, .none, .some(let yPosition)):
+                    return AnyView(
+                        self.shadow(radius: CGFloat(radius),
+                                    y: CGFloat(yPosition))
+                    )
+                case (.some(let radius), .none, .none, .none):
+                    return AnyView(
+                        self.shadow(radius: CGFloat(radius))
+                    )
+                case (.none, .some(let colorHex), .some(let xPosition), .some(let yPosition)):
+                    return AnyView(
+                        self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                    radius: 0,
+                                    x: CGFloat(xPosition),
+                                    y: CGFloat(yPosition))
+                    )
+                case (.none, .some(let colorHex), .none, .some):
+                    return AnyView(
+                        self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                    radius: 0)
+                    )
+                case (.none, .some(let colorHex), .none, .none):
+                    return AnyView(self.shadow(color: Color(uiColor: UIColor.hex(colorHex)), radius: 0))
+                case (.none, .none, .some(let xPosition), .none):
+                    return AnyView(
+                        self.shadow(radius: 0,
+                                    x: CGFloat(xPosition))
+                    )
+                case (.some(let radius), .some(let colorHex), .none, .none):
+                    return AnyView(
+                        self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                    radius: CGFloat(radius))
+                    )
+                case (.some(let radius), .some(let colorHex), .some(let xPosition), .none):
+                    return AnyView(
+                        self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                    radius: CGFloat(radius),
+                                    x: CGFloat(xPosition))
+                    )
+                case (.some(let radius), .some(let colorHex), .some(let xPosition), .some(let yPosition)):
+                    return AnyView(
+                        self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                    radius: CGFloat(radius),
+                                    x: CGFloat(xPosition),
+                                    y: CGFloat(yPosition))
+                    )
+                case (.none, .none, .some(let xPosition), .some(let yPosition)):
+                    return AnyView(
+                        self.shadow(radius: 0,
+                                    x: CGFloat(xPosition),
+                                    y: CGFloat(yPosition))
+                    )
+                case (.none, .none, .none, .some(let yPosition)):
+                    return AnyView(
+                        self.shadow(radius: 0,
+                                    y: CGFloat(yPosition))
+                    )
+                case (.none, .some(let colorHex), .some(let xPosition), .none):
+                    return AnyView(
+                        self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                    radius: 0,
+                                    x: CGFloat(xPosition))
+                    )
+                case (.some(let radius), .some(let colorHex), .none, .some(let yPosition)):
+                    return AnyView(
+                        self.shadow(color: Color(uiColor: UIColor.hex(colorHex)),
+                                    radius: CGFloat(radius),
+                                    y: CGFloat(yPosition))
+                    )
+                case (.some(let radius), .none, .some(let xPosition), .none):
+                    return AnyView(
+                        self.shadow(radius: CGFloat(radius), x: CGFloat(xPosition))
+                    )
+                case (.none, .none, .none, .none):
+                    return AnyView(self)
+                }
+            }
         case let .pickerStyle(style):
-            return AnyView(self)
+            return AnyView(self.pickerStyle(style.render))
         case let .blur(stateId, radiusKey, isOpaqueKey, radius, isOpaque):
-            return AnyView(self)
+            let stateRadius = findDoubleValue(stateId: stateId, id: radiusKey, state: state.value)
+            let stateIsOpaque = findBooleanValue(stateId: stateId, id: isOpaqueKey, state: state.value)
+            switch (stateRadius, stateIsOpaque){
+            case (.some(let radius), .some(let isOpaque)):
+                return AnyView(self.blur(radius: CGFloat(radius), opaque: isOpaque))
+            case (.some(let radius), .none):
+                return AnyView(self.blur(radius: CGFloat(radius)))
+            case (.none, .some(let isOpaque)):
+                return AnyView(self.blur(radius: 0, opaque: isOpaque))
+            case (.none, .none):
+                switch (radius, isOpaque) {
+                case (.some(let radius), .some(let isOpaque)):
+                    return AnyView(self.blur(radius: CGFloat(radius), opaque: isOpaque))
+                case (.some(let radius), .none):
+                    return AnyView(self.blur(radius: CGFloat(radius)))
+                case (.none, .some(let isOpaque)):
+                    return AnyView(self.blur(radius: 0, opaque: isOpaque))
+                case (.none, .none):
+                    return AnyView(self)
+                }
+            }
         case let .brightness(stateId, amountKey, amount):
-            return AnyView(self)
-        case let .textRenderingMode(injectedSymbolRenderingMode):
-            return AnyView(self)
-        case let .antiAliased(stateId, isAntiAliasedKey, isAntialised):
-            return AnyView(self)
-        case let .resizingable(capInsets, resizingMode):
-            return AnyView(self)
-        case let .imageRenderingMode(injectedImageRenderingMode):
-            return AnyView(self)
+            if let amount = findDoubleValue(stateId: stateId, id: amountKey, state: state.value) {
+                return AnyView(self.brightness(amount))
+            } else if let amount = amount {
+                return AnyView(self.brightness(amount))
+            } else {
+                return AnyView(self)
+            }
+        case let .textRenderingMode(mode):
+            return AnyView(self.symbolRenderingMode(mode.render))
+        case let .antiAliased(stateId, isAntiAliasedKey, isAntialiased):
+            guard let view = self as? Image else { return AnyView(self) }
+            if let isAntialiased = findBooleanValue(stateId: stateId, id: isAntiAliasedKey, state: state.value) {
+                return AnyView(view.antialiased(isAntialiased))
+            } else if let isAntialiased = isAntialiased {
+                return AnyView(view.antialiased(isAntialiased))
+            } else {
+                return AnyView(self)
+            }
+        case let .resizable(capInsets, resizingMode):
+            guard let view = self as? Image else { return AnyView(self) }
+            switch (capInsets, resizingMode) {
+            case (.some(let insets), .some(let mode)):
+                return AnyView(view.resizable(capInsets: insets.render, resizingMode: mode.render))
+            case (.some(let insets), .none):
+                return AnyView(view.resizable(capInsets: insets.render))
+            case (.none, .some(let mode)):
+                return AnyView(view.resizable(resizingMode: mode.render))
+            case (.none, .none):
+                return AnyView(view.resizable())
+            }
+        case let .imageRenderingMode(mode):
+            guard let view = self as? Image else { return AnyView(self)}
+            return AnyView(view.renderingMode(mode.render))
         case .colorInvert:
-            return AnyView(self)
+            return AnyView(self.colorInvert())
         case let .colorMultiply(stateId, colorKey, colorHex):
-            return AnyView(self)
-        case let .datePickerStyle(injectdDatePickerStyle):
-            return AnyView(self)
+            if let colorHex = findStringValue(stateId: stateId, id: colorKey, state: state.value) {
+                return AnyView(self.colorMultiply(Color(uiColor: UIColor.hex(colorHex))))
+            } else if !colorHex.isEmpty {
+                return AnyView(self.colorMultiply(Color(uiColor: UIColor.hex(colorHex))))
+            } else {
+                return AnyView(self)
+            }
+        case let .datePickerStyle(style):
+            return AnyView(self.datePickerStyle(style.render))
         }
     }
     
