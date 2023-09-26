@@ -6,7 +6,7 @@
 //
 
 import Foundation
-       
+
 public enum InjectedModifier: Codable {
     case systemFont(font: InjectedSystemFont)
     case font(stateId: String = "", nameId: String = "", sizeId: String = "", fontName: String? = nil, fontSize: Double? = nil)
@@ -27,6 +27,7 @@ public enum InjectedModifier: Codable {
     case background(content: InjectedView, alignment: ZStackAlignment? = nil)
     case fullScreenCover(stateId: String = "", viewStore: InjectedView, isPresentedKey: String)
     case sheet(stateId: String = "", viewStore: InjectedView, isPresentedKey: String)
+    case alert(stateId: String = "", isPresentedKey: String, alertView: InjectedAlert)
     case bold(stateId: String = "", isActiveKey: String = "")
     case italic(stateId: String = "", isActiveKey: String = "")
     case monoSpacedDigit

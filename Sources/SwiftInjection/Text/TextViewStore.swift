@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public struct TextViewStore: Codable {
     var id: String = ""
     var modifiers: [InjectedModifier] = []

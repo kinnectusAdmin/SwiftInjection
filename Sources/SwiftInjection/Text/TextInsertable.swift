@@ -12,7 +12,7 @@ import Combine
 public struct TextInsertable: View {
     @ObservedObject var store: TextStore
     var container: ViewStoresContainer
-
+    
     public var body: some View {
         Text(store.text)
             .addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)

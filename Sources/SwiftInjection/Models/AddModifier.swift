@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 import Combine
 
-
 public extension View {
     
     func addModifier(modifier: InjectedModifier, state: CurrentValueSubject<InjectedState, Never>, container: ViewStoresContainer) -> some View {
@@ -95,6 +94,21 @@ public extension View {
                         Insertable(state: state, container: container, viewStore: viewStore)
                     })
                 )
+            } else {
+                return AnyView(self)
+            }
+        case let .alert(stateId, isPresentedKey, alertView):
+            if let isPresented = findBooleanValue(stateId: stateId, id: isPresentedKey, state: state.value) {
+                switch alertView {
+                case let .dismissAlert(store):
+                    return AnyView(self.alert(isPresented: .constant(isPresented), content: {
+                        DismissAlertView(viewStore: store, state: state, container: container).render
+                    }))
+                case let .primarySecondaryAlert(store):
+                    return AnyView(self.alert(isPresented: .constant(isPresented), content: {
+                        PrimarySecondaryAlertView(viewStore: store, state: state, container: container).render
+                    }))
+                }
             } else {
                 return AnyView(self)
             }
