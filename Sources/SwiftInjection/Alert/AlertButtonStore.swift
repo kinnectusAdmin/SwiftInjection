@@ -11,7 +11,7 @@ import SwiftUI
 
 struct AlertButtonStore {
     var container: ViewStoresContainer
-    var state: CurrentValueSubject<InjectedState, Never>
+    var state: StateSignal
     var alertButton: AlertButton
     
     var render: Alert.Button {

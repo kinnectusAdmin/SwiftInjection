@@ -11,17 +11,17 @@ import Combine
 
 class ListStore: ObservableObject {
     @Published var listStates: [InjectedState] = []
-    var itemStateSubjects: [CurrentValueSubject<InjectedState, Never>] {
+    var itemStateSubjects: [StateSignal] {
         listStates.map {
-            CurrentValueSubject<InjectedState, Never>($0)
+            StateSignal($0)
         }
     }
     @Published var viewStore: ListViewStore
-    @Published var stateSubject: CurrentValueSubject<InjectedState, Never>
+    @Published var stateSubject: StateSignal
     @Published var state: InjectedState
     private var cancellables = Set<AnyCancellable>()
     init(viewStore: ListViewStore,
-         stateSubject: CurrentValueSubject<InjectedState, Never>) {
+         stateSubject: StateSignal) {
         self.viewStore = viewStore
         self.stateSubject = stateSubject
 
@@ -39,7 +39,7 @@ class ListStore: ObservableObject {
         stateSubject.eraseToAnyPublisher().assign(to: &$state)
     }
     
-    public func stateForItem(_ itemState: InjectedState) -> CurrentValueSubject<InjectedState, Never> {
-        itemStateSubjects.first(where: {$0.value.id == itemState.id}) ?? CurrentValueSubject<InjectedState,Never>(InjectedState.init(id: "", state: []))
+    public func stateForItem(_ itemState: InjectedState) -> StateSignal {
+        itemStateSubjects.first(where: {$0.value.id == itemState.id}) ?? StateSignal(InjectedState.init(id: "", state: []))
     }
 }

@@ -15,9 +15,9 @@ class TextStore: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     let viewStore: TextViewStore
-    let stateSubject: CurrentValueSubject<InjectedState, Never>
+    let stateSubject: StateSignal
     
-    init(stateSubject: CurrentValueSubject<InjectedState, Never>, store: TextViewStore) {
+    init(stateSubject: StateSignal, store: TextViewStore) {
         self.viewStore = store
         self.stateSubject = stateSubject
         self.state = stateSubject.value

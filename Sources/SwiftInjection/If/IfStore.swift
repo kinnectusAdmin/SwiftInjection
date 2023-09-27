@@ -10,11 +10,11 @@ import Combine
 
 class IfStore: ObservableObject {
     var viewStore: IfViewStore
-    var stateSubject: CurrentValueSubject<InjectedState,Never>
+    var stateSubject: StateSignal
     @Published var state: InjectedState
     @Published var condition: Bool = false
     
-    init(store: IfViewStore, stateSubject: CurrentValueSubject<InjectedState,Never>) {
+    init(store: IfViewStore, stateSubject: StateSignal) {
         self.viewStore = store
         self.stateSubject = stateSubject
         self.state = stateSubject.value

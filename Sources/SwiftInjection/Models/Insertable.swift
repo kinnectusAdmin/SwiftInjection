@@ -12,11 +12,11 @@ import Combine
 
 public struct Insertable: View {
     
-    var state: CurrentValueSubject<InjectedState,Never>
+    var state: StateSignal
     var container: ViewStoresContainer
     var viewStore: InjectedView
     
-public init(state: CurrentValueSubject<InjectedState,Never>,
+public init(state: StateSignal,
          container: ViewStoresContainer,
          viewStore: InjectedView) {
         self.state = state
@@ -51,7 +51,7 @@ public init(state: CurrentValueSubject<InjectedState,Never>,
                 container: container)
 
         case .forEach(let viewStore):
-
+            
             ForEachInsertable(
                 store: .init(viewStore: viewStore, stateSubject: state),
                 container: container)
@@ -71,7 +71,15 @@ public init(state: CurrentValueSubject<InjectedState,Never>,
         case .namedImage(let viewStore), .systemImage(let viewStore):
 
             ImageInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
-
+        
+        case .navigationStack(let viewStore):
+            
+            NavigationStackInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
+        case .navigationLink(let viewStore):
+            
+            NavigationLinkInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
         case .color(let viewStore):
 
             ColorInsertable(store: .init(store: viewStore, state: state), container: container)
@@ -85,21 +93,19 @@ public init(state: CurrentValueSubject<InjectedState,Never>,
             IfInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
 
         case .viewStoreReference(let id):
+            
             if let viewStore = container.viewStores.first(where: {$0.id == id })  {
                 Insertable(state: state, container: container, viewStore: viewStore)
             }
 
         case .empty:
-
+            
             EmptyView()
-
+            
         }
-        
     }
     
     public var body: some View {
         render
     }
-    
-    
 }

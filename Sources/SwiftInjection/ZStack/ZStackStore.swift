@@ -14,11 +14,11 @@ class ZStackStore: ObservableObject {
     @Published var alignment: Alignment = .center
     private var cancellables = Set<AnyCancellable>()
     
-    let stateSubject: CurrentValueSubject<InjectedState, Never>
+    let stateSubject: StateSignal
     let viewStore: ZStackViewStore
     
     init(store: ZStackViewStore,
-         stateSubject: CurrentValueSubject<InjectedState, Never>) {
+         stateSubject: StateSignal) {
         self.viewStore = store
         self.stateSubject = stateSubject
         self.state = stateSubject.value

@@ -95,3 +95,23 @@ public enum InjectdDatePickerStyle: String, Codable {
     }
 }
  
+public enum InjectedVisbility: String, Codable {
+    case none
+    var render: Visibility {
+        Visibility.automatic
+    }
+}
+
+public enum InjectedPopoverAttachmentAnchor: String, Codable {
+    case none
+    var render: PopoverAttachmentAnchor {
+        .point(.bottom)
+    }
+}
+
+public enum InjectedEdge: String, Codable {
+    case none
+    var render: Edge {
+        .bottom
+    }
+}

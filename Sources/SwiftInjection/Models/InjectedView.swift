@@ -28,6 +28,8 @@ indirect public enum InjectedView: Codable, Hashable {
     case button(store: ButtonViewStore)
     case namedImage(store: ImageViewStore)
     case systemImage(store: ImageViewStore)
+    case navigationStack(store: NavigationStackViewStore)
+    case navigationLink(store:  NavigationLinkViewStore)
     case color(store: ColorViewStore)
     case spacer(store: SpacerViewStore)
     case `if`(store: IfViewStore)
@@ -72,6 +74,10 @@ indirect public enum InjectedView: Codable, Hashable {
         case .namedImage(let store):
             return store.id
         case .systemImage(let store):
+            return store.id
+        case .navigationStack(let store):
+            return store.id
+        case .navigationLink(let store):
             return store.id
         case .color(let store):
             return store.id

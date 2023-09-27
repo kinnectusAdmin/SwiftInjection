@@ -15,7 +15,7 @@ class ButtonStore: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     let viewStore: ButtonViewStore
-    let stateSubject: CurrentValueSubject<InjectedState, Never>
+    let stateSubject: StateSignal
 
     @InjectedFunctionBuilder var action: InjectedFunctionBuilder {
         InjectedFunctionBuilder(
@@ -51,7 +51,7 @@ class ButtonStore: ObservableObject {
     }
     
     init(store: ButtonViewStore,
-         stateSubject: CurrentValueSubject<InjectedState, Never>
+         stateSubject: StateSignal
     ) {
         self.stateSubject = stateSubject
         self.viewStore = store

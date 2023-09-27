@@ -8,9 +8,9 @@ import Foundation
 import SwiftUI
 import Combine
 
-public struct PrimarySecondaryAlertView {
+struct PrimarySecondaryAlertView {
     var viewStore: PrimarySecondaryAlertViewStore
-    var state: CurrentValueSubject<InjectedState, Never>
+    var state: StateSignal
     var container: ViewStoresContainer
     var titleStore: TextStore {
         .init(stateSubject: state, store: viewStore.title)

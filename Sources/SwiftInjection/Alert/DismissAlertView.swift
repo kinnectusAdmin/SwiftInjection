@@ -11,7 +11,7 @@ import Combine
 
 public struct DismissAlertView {
     var viewStore: DismissAlertViewStore
-    var state: CurrentValueSubject<InjectedState, Never>
+    var state: StateSignal
     var container: ViewStoresContainer
     var titleStore: TextStore {
         .init(stateSubject: state, store: viewStore.title)

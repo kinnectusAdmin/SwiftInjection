@@ -13,9 +13,9 @@ class ImageStore: ObservableObject {
     @Published var state: InjectedState
     @Published var image: Image = .init(systemName: "")
     let viewStore: ImageViewStore
-    let stateSubject: CurrentValueSubject<InjectedState, Never>
+    let stateSubject: StateSignal
     
-    init(store: ImageViewStore, stateSubject: CurrentValueSubject<InjectedState, Never>) {
+    init(store: ImageViewStore, stateSubject: StateSignal) {
         self.viewStore = store
         self.stateSubject = stateSubject
         self.state = stateSubject.value

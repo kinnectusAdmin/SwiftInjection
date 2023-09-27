@@ -15,11 +15,11 @@ class VStackStore: ObservableObject {
     @Published var alignment: HorizontalAlignment = .center
     private var cancellables = Set<AnyCancellable>()
     
-    let stateSubject: CurrentValueSubject<InjectedState, Never>
+    let stateSubject: StateSignal
     let viewStore: VStackViewStore
     
     init(store: VStackViewStore,
-         stateSubject: CurrentValueSubject<InjectedState, Never>) {
+         stateSubject: StateSignal) {
         self.viewStore = store
         self.stateSubject = stateSubject
         self.state = stateSubject.value

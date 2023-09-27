@@ -9,9 +9,10 @@ import Foundation
 import SwiftUI
 import Combine
 
+
 public extension View {
     
-    func addModifier(modifier: InjectedModifier, state: CurrentValueSubject<InjectedState, Never>, container: ViewStoresContainer) -> some View {
+    func addModifier(modifier: InjectedModifier, state: StateSignal, container: ViewStoresContainer) -> some View {
         switch modifier {
         case .systemFont(let injectedSystemFont):
             return AnyView(
@@ -107,6 +108,46 @@ public extension View {
                 case let .primarySecondaryAlert(store):
                     return AnyView(self.alert(isPresented: .constant(isPresented), content: {
                         PrimarySecondaryAlertView(viewStore: store, state: state, container: container).render
+                    }))
+                }
+            } else {
+                return AnyView(self)
+            }
+        case let .confirmationDialog(stateId, titleKey, isPresentedKey, titleVisibility, title, actions):
+            let title = findStringValue(stateId: stateId, id: titleKey, state: state.value) ?? title ?? ""
+            if let isPresented = findBooleanValue(stateId: stateId, id: isPresentedKey, state: state.value), let visibility = titleVisibility {
+                return AnyView(
+                    self.confirmationDialog(title, isPresented: .constant(isPresented), titleVisibility: visibility.render, actions: {
+                        Insertable(state: state, container: container, viewStore: actions)
+                    })
+                )
+            } else if let isPresented = findBooleanValue(stateId: stateId, id: isPresentedKey, state: state.value) {
+                return AnyView(
+                    self.confirmationDialog(title, isPresented: .constant(isPresented), actions: {
+                        Insertable(state: state, container: container, viewStore: actions)
+                    })
+                )
+            } else {
+                return AnyView(self)
+            }
+        case let .popover(stateId, isPresentedKey, popoverAttachmentAnchor, edge, content):
+            if let isPresented = findBooleanValue(stateId: stateId, id: isPresentedKey, state: state.value) {
+                switch (popoverAttachmentAnchor, edge) {
+                case (.some(let anchor), .some(let edge)):
+                    return AnyView(self.popover(isPresented: .constant(isPresented), attachmentAnchor: anchor.render, arrowEdge: edge.render, content: {
+                        Insertable(state: state, container: container, viewStore: content)
+                    }))
+                case (.none, .some(let edge)):
+                    return AnyView(self.popover(isPresented: .constant(isPresented), arrowEdge: edge.render, content: {
+                        Insertable(state: state, container: container, viewStore: content)
+                    }))
+                case (.some(let anchor), .none):
+                    return AnyView(self.popover(isPresented: .constant(isPresented), attachmentAnchor: anchor.render, content: {
+                        Insertable(state: state, container: container, viewStore: content)
+                    }))
+                case (.none, .none):
+                    return AnyView(self.popover(isPresented: .constant(isPresented), content: {
+                        Insertable(state: state, container: container, viewStore: content)
                     }))
                 }
             } else {
@@ -619,7 +660,7 @@ public extension View {
     }
     
     
-    func addModifiers(mods: [InjectedModifier], state: CurrentValueSubject<InjectedState, Never>, container: ViewStoresContainer) -> some View {
+    func addModifiers(mods: [InjectedModifier], state: StateSignal, container: ViewStoresContainer) -> some View {
         print(state.value)
         return mods
             .reduce(AnyView(self), { accum, nextModifier -> AnyView in

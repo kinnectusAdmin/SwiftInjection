@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public enum InjectedModifier: Codable {
     case systemFont(font: InjectedSystemFont)
@@ -28,6 +29,8 @@ public enum InjectedModifier: Codable {
     case fullScreenCover(stateId: String = "", viewStore: InjectedView, isPresentedKey: String)
     case sheet(stateId: String = "", viewStore: InjectedView, isPresentedKey: String)
     case alert(stateId: String = "", isPresentedKey: String, alertView: InjectedAlert)
+    case confirmationDialog(stateId: String = "", titleKey: String, isPresentedKey: String, titleVisibility: InjectedVisbility? = nil, title: String? = nil, actions: InjectedView)
+    case popover(stateId: String = "", isPresentedKey: String, popoverAttachmentAnchor: InjectedPopoverAttachmentAnchor? = nil, edge: InjectedEdge? = nil, content: InjectedView)
     case bold(stateId: String = "", isActiveKey: String = "")
     case italic(stateId: String = "", isActiveKey: String = "")
     case monoSpacedDigit

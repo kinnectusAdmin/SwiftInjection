@@ -11,7 +11,7 @@ import Combine
 @resultBuilder
 public struct InjectedFunctionBuilder {
     
-    var state: CurrentValueSubject<InjectedState, Never>?
+    var state: StateSignal?
     var operation: InjectedOperation
     static var cancellables = Set<AnyCancellable>()
     
@@ -25,7 +25,7 @@ public struct InjectedFunctionBuilder {
         }
     }
     
-    static func performOperation(state: CurrentValueSubject<InjectedState, Never>, operation: InjectedOperation) {
+    static func performOperation(state: StateSignal, operation: InjectedOperation) {
         switch operation {
         case .asyncAfter(let operation, let delay):
             Future<InjectedState, Never> { promise in

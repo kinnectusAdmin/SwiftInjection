@@ -13,9 +13,9 @@ class SpacerStore: ObservableObject {
     @Published var state: InjectedState
     
     let viewStore: SpacerViewStore
-    let stateSubject: CurrentValueSubject<InjectedState, Never>
+    let stateSubject: StateSignal
     
-    init(store: SpacerViewStore, stateSubject: CurrentValueSubject<InjectedState, Never>) {
+    init(store: SpacerViewStore, stateSubject: StateSignal) {
         self.viewStore = store
         self.stateSubject = stateSubject
         self.state = stateSubject.value

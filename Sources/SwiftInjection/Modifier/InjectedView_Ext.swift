@@ -71,6 +71,15 @@ public extension InjectedView {
     func sheet(viewStore: InjectedView, isPresentedKey: String) -> InjectedView {
         self.addModifier(modifier: .sheet(viewStore: viewStore, isPresentedKey: isPresentedKey))
     }
+    
+    func confirmationDialog(stateId: String = "", titleKey: String, isPresentedKey: String, titleVisibility: InjectedVisbility? = nil, title: String? = nil, actions: InjectedView) -> InjectedView {
+        self.addModifier(modifier: .confirmationDialog(stateId: stateId, titleKey: titleKey, isPresentedKey: isPresentedKey, titleVisibility: titleVisibility, title: title, actions: actions))
+    }
+    
+    func popover(stateId: String = "", isPresentedKey: String, popoverAttachmentAnchor: InjectedPopoverAttachmentAnchor? = nil, edge: InjectedEdge? = nil, content: InjectedView) -> InjectedView {
+        self.addModifier(modifier: .popover(stateId: stateId, isPresentedKey: isPresentedKey, popoverAttachmentAnchor: popoverAttachmentAnchor, edge: edge, content: content))
+    }
+    
     func bold(stateId: String = "", isActiveKey: String = "") -> InjectedView {
         addModifier(modifier: .bold(stateId: stateId, isActiveKey: isActiveKey))
     }

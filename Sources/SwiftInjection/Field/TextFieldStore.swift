@@ -16,7 +16,7 @@ class TextFieldStore: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     let viewStore: FieldViewStore
-    let stateSubject: CurrentValueSubject<InjectedState, Never>
+    let stateSubject: StateSignal
     
     var textBinding: Binding<String> {
         .init(
@@ -31,7 +31,7 @@ class TextFieldStore: ObservableObject {
         )
     }
     
-    init(store: FieldViewStore, stateSubject: CurrentValueSubject<InjectedState, Never>) {
+    init(store: FieldViewStore, stateSubject: StateSignal) {
         self.viewStore = store
         self.state = stateSubject.value
         self.stateSubject = stateSubject
