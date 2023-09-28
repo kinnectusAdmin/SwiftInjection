@@ -68,10 +68,14 @@ public init(state: StateSignal,
 
             TextFieldInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
 
-        case .namedImage(let viewStore), .systemImage(let viewStore):
+        case .namedImage(let viewStore), .systemImage(let viewStore), .asyncImage(let viewStore):
 
             ImageInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
-        
+      
+        case .tab(let viewStore):
+            
+            TabInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
         case .navigationStack(let viewStore):
             
             NavigationStackInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)

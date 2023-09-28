@@ -69,4 +69,6 @@ public enum InjectedModifier: Codable {
     case colorInvert
     case colorMultiply(stateId: String = "", colorKey: String = "", colorHex: String = "")
     case datePickerStyle(InjectdDatePickerStyle)
+    case badge(stateId: String = "", badgeKey: String)
+    case tabItem(item: InjectedView)
 }

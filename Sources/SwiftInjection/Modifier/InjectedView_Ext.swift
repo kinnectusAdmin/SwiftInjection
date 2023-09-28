@@ -194,4 +194,12 @@ public extension InjectedView {
     func datePickerStyle(style: InjectdDatePickerStyle) -> InjectedView {
         addModifier(modifier: .datePickerStyle(style))
     }
+    
+    func badge(stateId: String = "", badgeKey: String) -> InjectedView {
+        addModifier(modifier: .badge(stateId: stateId, badgeKey: badgeKey))
+    }
+    
+    func tabItem(item: InjectedView) -> InjectedView {
+        addModifier(modifier: .tabItem(item: item))
+    }
 }

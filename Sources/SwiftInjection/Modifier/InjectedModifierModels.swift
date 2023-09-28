@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+
 public enum InjectedFontDesign: String, Codable  {
     case none
     var render: Font.Design {

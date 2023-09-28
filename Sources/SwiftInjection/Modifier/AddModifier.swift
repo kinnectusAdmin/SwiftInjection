@@ -656,6 +656,16 @@ public extension View {
             }
         case let .datePickerStyle(style):
             return AnyView(self.datePickerStyle(style.render))
+        case let .badge(stateId, badgeKey):
+            if let badgeValue = findIntegerValue(stateId: stateId, id: badgeKey, state: state.value) {
+                return AnyView(self.badge(badgeValue))
+            } else {
+                return AnyView(self)
+            }
+        case let .tabItem(item):
+            return AnyView(self.tabItem({
+                Insertable(state: state, container: container, viewStore: item)
+            }))
         }
     }
     
