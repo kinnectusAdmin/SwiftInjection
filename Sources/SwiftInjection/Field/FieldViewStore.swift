@@ -8,8 +8,8 @@
 import Foundation
 
 
-public struct FieldViewStore: Codable {
-    var id: String = ""
+public struct FieldViewStore: Codable, Identifiable {
+    public var id: String = ""
     var modifiers: [InjectedModifier] = []
     var textKey: String = ""
     var content: InjectedView = .empty()

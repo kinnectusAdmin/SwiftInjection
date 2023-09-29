@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SpacerViewStore: Codable {
-    var id: String = ""
+public struct SpacerViewStore: Codable, Identifiable {
+    public var id: String = ""
     var modifiers: [InjectedModifier] = []
 }

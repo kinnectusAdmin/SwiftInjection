@@ -8,8 +8,8 @@
 import Foundation
 
 
-public struct ButtonViewStore: Codable {
-    var id: String = ""
+public struct ButtonViewStore: Codable, Identifiable {
+    public var id: String = ""
     var modifiers: [InjectedModifier] = []
     var operation1: InjectedOperation? = nil
     var operation2: InjectedOperation? = nil

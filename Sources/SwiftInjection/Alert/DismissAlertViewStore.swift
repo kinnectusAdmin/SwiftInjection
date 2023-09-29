@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct DismissAlertViewStore: Codable {
+public struct DismissAlertViewStore: Codable, Identifiable {
+    public var id: String = ""
     var title: TextViewStore
     var message: TextViewStore
     var button: AlertButton

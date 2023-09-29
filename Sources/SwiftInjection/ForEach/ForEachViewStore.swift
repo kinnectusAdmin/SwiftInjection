@@ -8,8 +8,8 @@
 import Foundation
 
 
-public struct ForEachViewStore: Codable {
-    var id: String = ""
+public struct ForEachViewStore: Codable, Identifiable {
+    public var id: String = ""
     var modifiers: [InjectedModifier] = []
     var forEachKey: String = ""
     var content: InjectedView = .empty()

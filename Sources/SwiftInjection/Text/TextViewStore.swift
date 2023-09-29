@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct TextViewStore: Codable {
-    var id: String = ""
+public struct TextViewStore: Codable, Identifiable {
+    public var id: String = ""
     var modifiers: [InjectedModifier] = []
     var textKey: String = ""
 }

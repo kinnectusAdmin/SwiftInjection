@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct VStackViewStore: Codable {
-    var id: String = ""
+public struct VStackViewStore: Codable, Identifiable {
+    public var id: String = ""
     var modifiers: [InjectedModifier] = []
     var alignmentKey: String = ""
     var spacingKey: String = ""

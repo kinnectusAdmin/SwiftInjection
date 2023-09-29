@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct ImageViewStore: Codable {
-    var id: String = ""
+public struct ImageViewStore: Codable, Identifiable {
+    public var id: String = ""
     var nameKey: String? = nil
     var name: String? = nil
     var systemNameKey: String? = nil

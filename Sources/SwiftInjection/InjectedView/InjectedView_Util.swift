@@ -38,6 +38,26 @@ public func zStack(
          return   .zStack(viewStore: .init(id: id, modifiers: modifiers, alignmentKey: alignmentKey, spacingKey: spacingKey, content1: content.0, content2: content.1, content3: content.2, content4: content.3, content5: content.4, content6: content.5, content7: content.6, content8: content.7, content9: content.8, content10: content.9))
 }
 
+public func lazyVStack(
+    id: String = "",
+    modifiers: [InjectedModifier] = [],
+    alignmentKey: String = "",
+    spacingKey: String = "",
+    content: InjectedContent...) -> InjectedView {
+        let content = content.map { $0() }.toTenLengthTuple()
+         return   .lazyVStack(viewStore: .init(id: id, modifiers: modifiers, alignmentKey: alignmentKey, spacingKey: spacingKey, content1: content.0, content2: content.1, content3: content.2, content4: content.3, content5: content.4, content6: content.5, content7: content.6, content8: content.7, content9: content.8, content10: content.9))
+}
+
+public func lazyHStack(
+    id: String = "",
+    modifiers: [InjectedModifier] = [],
+    alignmentKey: String = "",
+    spacingKey: String = "",
+    content: InjectedContent...) -> InjectedView {
+        let content = content.map { $0() }.toTenLengthTuple()
+         return   .lazyHStack(viewStore: .init(id: id, modifiers: modifiers, alignmentKey: alignmentKey, spacingKey: spacingKey, content1: content.0, content2: content.1, content3: content.2, content4: content.3, content5: content.4, content6: content.5, content7: content.6, content8: content.7, content9: content.8, content10: content.9))
+}
+
 public func list(
     id: String = "",
     modifiers: [InjectedModifier] = [],

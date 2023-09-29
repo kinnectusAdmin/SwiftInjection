@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct NavigationLinkViewStore: Codable {
-    var id: String
+public struct NavigationLinkViewStore: Codable, Identifiable {
+    public var id: String = ""
     var modifiers: [InjectedModifier]
     var destination: InjectedView
     var label: InjectedView

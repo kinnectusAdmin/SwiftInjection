@@ -6,7 +6,8 @@
 //
 import Foundation
 
-public struct PrimarySecondaryAlertViewStore: Codable {
+public struct PrimarySecondaryAlertViewStore: Codable, Identifiable {
+    public var id: String = ""
     var container: ViewStoresContainer
     var title: TextViewStore
     var message: TextViewStore

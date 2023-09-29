@@ -8,8 +8,8 @@
 import Foundation
 
 
-public struct HStackViewStore: Codable {
-    var id: String = ""
+public struct HStackViewStore: Codable, Identifiable {
+    public var id: String = ""
     var modifiers: [InjectedModifier] = []
     var alignmentKey: String = ""
     var spacingKey: String = ""

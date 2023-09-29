@@ -106,6 +106,18 @@ public init(state: StateSignal,
             
             EmptyView()
             
+        case let .lazyVStack(viewStore):
+            
+            LazyVStackInsertable(
+                store: .init(store: viewStore, stateSubject: state),
+                container: container)
+
+        case let .lazyHStack(viewStore):
+            
+            LazyHStackInsertable(
+                store: .init(store: viewStore, stateSubject: state),
+                container: container)
+            
         }
     }
     

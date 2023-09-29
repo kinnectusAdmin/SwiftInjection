@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct TabViewStore: Codable {
-    var id: String
+public struct TabViewStore: Codable, Identifiable {
+    public var id: String = ""
     var modifiers: [InjectedModifier]
     var content1: InjectedView = .empty()
     var content2: InjectedView? = nil

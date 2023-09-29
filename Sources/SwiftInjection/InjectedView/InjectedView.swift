@@ -21,6 +21,8 @@ indirect public enum InjectedView: Codable, Hashable {
     case vStack(viewStore: VStackViewStore)
     case hStack(viewStore: HStackViewStore)
     case zStack(viewStore: ZStackViewStore)
+    case lazyVStack(viewStore: VStackViewStore)
+    case lazyHStack(viewStore: HStackViewStore)
     case list(viewStore: ListViewStore)
     case forEach(viewStore: ForEachViewStore)
     case text(viewStore: TextViewStore)
@@ -62,6 +64,10 @@ indirect public enum InjectedView: Codable, Hashable {
         case .hStack(let viewStore):
             return viewStore.id
         case .zStack(let viewStore):
+            return viewStore.id
+        case .lazyVStack(let viewStore):
+            return viewStore.id
+        case .lazyHStack(let viewStore):
             return viewStore.id
         case .list(let viewStore):
             return viewStore.id

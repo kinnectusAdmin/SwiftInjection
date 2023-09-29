@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct IfViewStore: Codable {
-    var id: String = ""
+public struct IfViewStore: Codable, Identifiable {
+    public var id: String = ""
     var conditionKey: String = ""
     var content: InjectedView 
 }
