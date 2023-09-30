@@ -202,4 +202,16 @@ public extension InjectedView {
     func tabItem(item: InjectedView) -> InjectedView {
         addModifier(modifier: .tabItem(item: item))
     }
+    func keyboardType(keyboard: InjectedKeyboardType) -> InjectedView {
+        addModifier(modifier: .keyboardType(keyboard: keyboard))
+    }
+    func autoCorrectionDisabled(stateId: String = "", isDisabledKey: String = "", isDisabled: Bool = true) -> InjectedView {
+        addModifier(modifier: .autoCorrectionDisabled(stateId: stateId, isDisabledKey: isDisabledKey, isDisabled: isDisabled))
+    }
+    func textInputAutoCapitalization(capitalization: InjectedTextInputAutoCapitalization) -> InjectedView {
+        addModifier(modifier: .textInputAutoCapitalization(capitalization: capitalization))
+    }
+    func textContentType(contentType: InjectedTextContentType) -> InjectedView {
+        addModifier(modifier: .textContentType(contentType: contentType))
+    }
 }

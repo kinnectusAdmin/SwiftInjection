@@ -116,3 +116,24 @@ public enum InjectedEdge: String, Codable {
         .bottom
     }
 }
+
+public enum InjectedKeyboardType: String, Codable {
+    case none
+    var render: UIKeyboardType {
+        .default
+    }
+}
+
+public enum InjectedTextInputAutoCapitalization: String, Codable {
+    case none
+    var render: TextInputAutocapitalization {
+        .never
+    }
+}
+
+public enum InjectedTextContentType: String, Codable {
+    case none
+    var render: UITextContentType {
+        .name
+    }
+}

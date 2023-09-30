@@ -70,4 +70,8 @@ public enum InjectedModifier: Codable {
     case datePickerStyle(InjectdDatePickerStyle)
     case badge(stateId: String = "", badgeKey: String)
     case tabItem(item: InjectedView)
+    case keyboardType(keyboard: InjectedKeyboardType)
+    case autoCorrectionDisabled(stateId: String = "", isDisabledKey: String = "", isDisabled: Bool = true)
+    case textInputAutoCapitalization(capitalization: InjectedTextInputAutoCapitalization)
+    case textContentType(contentType: InjectedTextContentType)
 }

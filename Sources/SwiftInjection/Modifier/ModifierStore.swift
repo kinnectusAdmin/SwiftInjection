@@ -635,7 +635,7 @@ struct ModifierStore: ViewModifier {
                 return AnyView(view.resizable())
             }
         case let .imageRenderingMode(mode):
-            guard let view = self as? Image else { return AnyView(content)}
+            guard let view = content as? Image else { return AnyView(content)}
             return AnyView(view.renderingMode(mode.render))
         case .colorInvert:
             return AnyView(content.colorInvert())
@@ -659,7 +659,18 @@ struct ModifierStore: ViewModifier {
             return AnyView(content.tabItem({
                 Insertable(state: state, container: container, viewStore: item)
             }))
+        case let .keyboardType(keyboard):
+            return AnyView(content.keyboardType(keyboard.render))
+        case let .autoCorrectionDisabled(stateId, isDisabledKey, isDisabled):
+            if let isDisabled = findBooleanValue(stateId: stateId, id: isDisabledKey, state: state.value) {
+                return AnyView(content.autocorrectionDisabled(isDisabled))
+            } else {
+                return AnyView(content.autocorrectionDisabled(isDisabled))
+            }
+        case let .textInputAutoCapitalization(capitalization):
+            return AnyView(content.textInputAutocapitalization(capitalization.render))
+        case let .textContentType(contentType):
+            return AnyView(content.textContentType(contentType.render))
         }
-
     }
 }
