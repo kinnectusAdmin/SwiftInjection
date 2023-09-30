@@ -13,7 +13,7 @@ import Combine
 public extension View {
     
     func addModifier(injectedModifier: InjectedModifier, state: StateSignal, container: ViewStoresContainer) -> some View {
-        modifier(InjectedModifierStore(modifier: injectedModifier, state: state, container: container))
+        modifier(ModifierStore(modifier: injectedModifier, state: state, container: container))
     }
     
     
