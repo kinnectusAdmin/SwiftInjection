@@ -613,30 +613,8 @@ struct ModifierStore: ViewModifier {
             }
         case let .textRenderingMode(mode):
             return AnyView(content.symbolRenderingMode(mode.render))
-        case let .antiAliased(stateId, isAntiAliasedKey, isAntialiased):
-            guard let view = self as? Image else { return AnyView(content) }
-            if let isAntialiased = findBooleanValue(stateId: stateId, id: isAntiAliasedKey, state: state.value) {
-                return AnyView(view.antialiased(isAntialiased))
-            } else if let isAntialiased = isAntialiased {
-                return AnyView(view.antialiased(isAntialiased))
-            } else {
-                return AnyView(content)
-            }
-        case let .resizable(capInsets, resizingMode):
-            guard let view = self as? Image else { return AnyView(content) }
-            switch (capInsets, resizingMode) {
-            case (.some(let insets), .some(let mode)):
-                return AnyView(view.resizable(capInsets: insets.render, resizingMode: mode.render))
-            case (.some(let insets), .none):
-                return AnyView(view.resizable(capInsets: insets.render))
-            case (.none, .some(let mode)):
-                return AnyView(view.resizable(resizingMode: mode.render))
-            case (.none, .none):
-                return AnyView(view.resizable())
-            }
-        case let .imageRenderingMode(mode):
-            guard let view = content as? Image else { return AnyView(content)}
-            return AnyView(view.renderingMode(mode.render))
+        case .antiAliased, .imageRenderingMode, .resizable:
+            return AnyView(content)
         case .colorInvert:
             return AnyView(content.colorInvert())
         case let .colorMultiply(stateId, colorKey, colorHex):

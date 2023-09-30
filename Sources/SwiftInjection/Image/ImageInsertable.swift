@@ -18,19 +18,19 @@ public struct ImageInsertable: View {
             EmptyView()
         case let .system(name):
             Image(systemName: name)
-                .addModifiers(mods: store.viewStore.modifiers,
+                .addModifiers(modifiers: store.viewStore.modifiers,
                               state: store.stateSubject,
                               container: container)
         case let .local(name):
             Image(name)
-                .addModifiers(mods: store.viewStore.modifiers,
+                .addModifiers(modifiers: store.viewStore.modifiers,
                               state: store.stateSubject,
                               container: container)
         case let .async(url, scale, placeholder):
             if let placeholder = placeholder {
                 AsyncImage(url: url, scale: CGFloat(scale)) { image in
                     image
-                        .addModifiers(mods: store.viewStore.modifiers,
+                        .addModifiers(modifiers: store.viewStore.modifiers,
                                       state: store.stateSubject,
                                       container: container)
                 } placeholder: {
@@ -40,6 +40,5 @@ public struct ImageInsertable: View {
                 AsyncImage(url: url, scale: CGFloat(scale))
             }
         }
-            
     }
 }
