@@ -27,6 +27,7 @@ indirect public enum InjectedView: Codable, Hashable {
     case forEach(viewStore: ForEachViewStore)
     case text(viewStore: TextViewStore)
     case field(viewStore: FieldViewStore)
+    case secureField(viewStore: SecureFieldViewStore)
     case button(viewStore: ButtonViewStore)
     case namedImage(viewStore: ImageViewStore)
     case systemImage(viewStore: ImageViewStore)
@@ -76,6 +77,8 @@ indirect public enum InjectedView: Codable, Hashable {
         case .text(let viewStore):
             return viewStore.id
         case .field(let viewStore):
+            return viewStore.id
+        case .secureField(let viewStore):
             return viewStore.id
         case .button(let viewStore):
             return viewStore.id

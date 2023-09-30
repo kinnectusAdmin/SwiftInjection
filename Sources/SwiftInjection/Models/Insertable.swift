@@ -67,7 +67,11 @@ public init(state: StateSignal,
         case .field(let viewStore):
 
             TextFieldInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
+        
+        case .secureField(let viewStore):
 
+            SecureFieldInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
+            
         case .namedImage(let viewStore), .systemImage(let viewStore), .asyncImage(let viewStore):
 
             ImageInsertable(store: .init(store: viewStore, stateSubject: state), container: container)

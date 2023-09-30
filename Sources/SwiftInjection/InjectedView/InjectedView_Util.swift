@@ -89,6 +89,17 @@ public func field(
         .field(viewStore: .init(id: id, modifiers: modifiers, textKey: textKey, content: content()))
 }
 
+public func secureField(
+    id: String = "",
+    modifiers: [InjectedModifier] = [],
+    titleKey: String = "",
+    title: String = "",
+    textKey: String = "",
+    promptKey: String? = nil,
+    prompt: String = "") -> InjectedView {
+        .secureField(viewStore: .init(id: id, modifiers: modifiers, titleKey: titleKey, title: title, textKey: textKey, promptKey: promptKey, prompt: prompt))
+}
+
 public func button(
     id: String = "",
     modifiers: [InjectedModifier] = [],
@@ -118,6 +129,17 @@ public func systemImage(
     systemNameKey: String? = nil,
     modifiers: [InjectedModifier] = []) -> InjectedView {
         .systemImage(viewStore: .init(id: id, systemNameKey: systemNameKey, modifiers: modifiers))
+}
+
+public func asyncImage(
+    id: String = "",
+    urlKey: String? = nil,
+    url: String? = nil,
+    scaleKey: String? = nil,
+    scale: Double = 1,
+    placeholder: InjectedView? = nil,
+    modifiers: [InjectedModifier] = []) -> InjectedView {
+        .asyncImage(viewStore: .init(id: id, urlKey: urlKey, url: url, scaleKey: scaleKey, scale: scale, placeholder: placeholder, modifiers: modifiers))
 }
 
 public func navigationStack(id: String,
