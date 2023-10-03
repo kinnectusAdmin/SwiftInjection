@@ -100,6 +100,20 @@ public func secureField(
         .secureField(viewStore: .init(id: id, modifiers: modifiers, titleKey: titleKey, title: title, textKey: textKey, promptKey: promptKey, prompt: prompt))
 }
 
+public func label(
+    id: String = "",
+    modifiers: [InjectedModifier],
+    titleKey: String = "",
+    imageKey: String = "",
+    systemImageKey: String = "",
+    titleView: InjectedView? = nil,
+    iconView: InjectedView? = nil,
+    title: String? = nil,
+    image: String? = nil,
+    systemImage: String? = nil) -> InjectedView {
+        .label(viewStore: .init(id: id, modifiers: modifiers, titleKey: titleKey, imageKey: imageKey, systemImageKey: systemImageKey, titleView: titleView, iconView: iconView, title: title, image: image, systemImage: systemImageKey))
+}
+
 public func button(
     id: String = "",
     modifiers: [InjectedModifier] = [],

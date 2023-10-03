@@ -29,6 +29,8 @@ public extension InjectedView {
             return .field(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier), textKey: viewStore.textKey))
         case .secureField(let viewStore):
             return .secureField(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier), textKey: viewStore.textKey))
+        case .label(let viewStore):
+            return .label(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier), titleKey: viewStore.titleKey, imageKey: viewStore.imageKey, systemImageKey: viewStore.imageKey, titleView: viewStore.titleView, iconView: viewStore.iconView, title: viewStore.title, image: viewStore.image, systemImage: viewStore.systemImage))
         case .button(let viewStore):
             return .button(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier), operation1: viewStore.operation1, operation2: viewStore.operation2, operation3: viewStore.operation3, operation4: viewStore.operation4, operation5: viewStore.operation5, operation6: viewStore.operation6, operation7: viewStore.operation7, operation8: viewStore.operation8, operation9: viewStore.operation9, operation10: viewStore.operation10, content: viewStore.content))
         case .namedImage(let viewStore):
