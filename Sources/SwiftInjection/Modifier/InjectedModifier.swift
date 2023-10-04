@@ -74,4 +74,5 @@ public enum InjectedModifier: Codable {
     case autoCorrectionDisabled(stateId: String = "", isDisabledKey: String = "", isDisabled: Bool = true)
     case textInputAutoCapitalization(capitalization: InjectedTextInputAutoCapitalization)
     case textContentType(contentType: InjectedTextContentType)
+    case path(stateId: String = "", xKey: String = "", yKey: String = "", widthKey: String = "", heightKey: String = "", x: Double? = nil, y: Double? = nil, width: Double? = nil, height: Double? = nil)
 }

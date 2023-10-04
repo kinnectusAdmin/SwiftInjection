@@ -95,7 +95,11 @@ public init(state: StateSignal,
         case .color(let viewStore):
 
             ColorInsertable(store: .init(store: viewStore, state: state), container: container)
-
+            
+        case .rectangle(let viewStore):
+            
+            RectangleInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
         case .spacer(let viewStore):
 
             SpacerInsertable(store: .init(store: viewStore, stateSubject: state), container: container)

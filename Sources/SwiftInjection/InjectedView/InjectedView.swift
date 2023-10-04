@@ -37,6 +37,7 @@ indirect public enum InjectedView: Codable, Hashable {
     case navigationLink(viewStore:  NavigationLinkViewStore)
     case tab(viewStore: TabViewStore)
     case color(viewStore: ColorViewStore)
+    case rectangle(viewStore: RectangleViewStore)
     case spacer(viewStore: SpacerViewStore)
     case `if`(viewStore: IfViewStore)
     // case `ifLet`(conditionKey: String, modifiers: [InjectedModifier], content: InjectedViewStore)
@@ -98,6 +99,8 @@ indirect public enum InjectedView: Codable, Hashable {
         case .tab(let viewStore):
             return viewStore.id
         case .color(let viewStore):
+            return viewStore.id
+        case .rectangle(let viewStore):
             return viewStore.id
         case .spacer(let viewStore):
             return viewStore.id

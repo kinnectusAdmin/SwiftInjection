@@ -183,8 +183,13 @@ public func color(
         .color(viewStore: .init(id: id, modifiers: modifiers, colorKey: colorKey))
 }
 
+public func rectangle(id: String = "", modifiers: [InjectedModifier] = []) -> InjectedView {
+    .rectangle(viewStore: .init(id: id, modifiers: modifiers))
+}
+
 public func spacer(
     id: String = "",
     modifiers: [InjectedModifier] = []) -> InjectedView {
         .spacer(viewStore: .init(id: id, modifiers: modifiers))
 }
+

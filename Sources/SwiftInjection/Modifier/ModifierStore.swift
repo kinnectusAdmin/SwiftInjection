@@ -15,6 +15,12 @@ struct ModifierStore: ViewModifier {
     
     func body(content: Content) -> some View {
         switch modifier {
+            //These first cases container specialized modifiers that swiftui returns non view conforming elemens from making them
+            //imcompatible with the .addModifier function which reduces the consumed view to some View exclusively.
+            //to counter this extensions must be created on the insertables that capture the errant views thereby allowing them to
+            //still retain the use of their modifiers and the others specific to the View protocol
+        case .antiAliased, .imageRenderingMode, .resizable, .path:
+            return AnyView(content)
         case .systemFont(let injectedSystemFont):
             return AnyView(
                 content.font(injectedSystemFont.font)
@@ -613,8 +619,6 @@ struct ModifierStore: ViewModifier {
             }
         case let .textRenderingMode(mode):
             return AnyView(content.symbolRenderingMode(mode.render))
-        case .antiAliased, .imageRenderingMode, .resizable:
-            return AnyView(content)
         case .colorInvert:
             return AnyView(content.colorInvert())
         case let .colorMultiply(stateId, colorKey, colorHex):
