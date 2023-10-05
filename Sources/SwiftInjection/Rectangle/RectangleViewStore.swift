@@ -11,15 +11,3 @@ public struct RectangleViewStore: Codable {
     var id: String = ""
     var modifiers: [InjectedModifier] = []
 }
-
-public struct RoundedRectangleViewStore: Codable {
-    var id: String = ""
-    var modifiers: [InjectedModifier] = []
-    var cornerRadiusKey: String = ""
-    var widthKey: String = ""
-    var heightKey: String = ""
-    var cornerRadius: Double? = nil
-    var width: Double? = nil
-    var height: Double? = nil
-    var style: InjectedRoundedCornerStyle? = nil
-}
