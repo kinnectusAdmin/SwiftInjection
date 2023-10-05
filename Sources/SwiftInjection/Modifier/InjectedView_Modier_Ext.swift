@@ -53,6 +53,8 @@ public extension InjectedView {
             return .color(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier), colorKey: viewStore.colorKey))
         case .rectangle(let viewStore):
             return .rectangle(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier)))
+        case .roundedRectangle(let viewStore):
+            return .roundedRectangle(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers, cornerRadiusKey: viewStore.cornerRadiusKey, widthKey: viewStore.widthKey, heightKey: viewStore.heightKey, cornerRadius: viewStore.cornerRadius, width: viewStore.width, height: viewStore.height, style: viewStore.style))
         case .spacer(let viewStore):
             return .spacer(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier)))
         }

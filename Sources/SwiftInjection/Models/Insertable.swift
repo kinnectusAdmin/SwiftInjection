@@ -100,6 +100,10 @@ public init(state: StateSignal,
             
             RectangleInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
             
+        case .roundedRectangle(let viewStore):
+            
+            RoundedRectangleInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
         case .spacer(let viewStore):
 
             SpacerInsertable(store: .init(store: viewStore, stateSubject: state), container: container)

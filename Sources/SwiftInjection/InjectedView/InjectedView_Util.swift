@@ -187,6 +187,19 @@ public func rectangle(id: String = "", modifiers: [InjectedModifier] = []) -> In
     .rectangle(viewStore: .init(id: id, modifiers: modifiers))
 }
 
+public func roundedRectangle(
+    id: String = "",
+    modifiers: [InjectedModifier] = [],
+    cornerRadiusKey: String = "",
+    widthKey: String = "",
+    heightKey: String = "",
+    cornerRadius: Double? = nil,
+    width: Double? = nil,
+    height: Double? = nil,
+    style: InjectedRoundedCornerStyle? = nil) -> InjectedView {
+    .roundedRectangle(viewStore: .init(id: id, modifiers: modifiers, cornerRadiusKey: cornerRadiusKey, widthKey: widthKey, heightKey: heightKey, cornerRadius: cornerRadius, width: width, height: height, style: style))
+}
+
 public func spacer(
     id: String = "",
     modifiers: [InjectedModifier] = []) -> InjectedView {

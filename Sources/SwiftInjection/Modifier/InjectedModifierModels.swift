@@ -137,3 +137,10 @@ public enum InjectedTextContentType: String, Codable {
         .name
     }
 }
+
+public enum InjectedRoundedCornerStyle: String, Codable {
+    case none
+    var render: RoundedCornerStyle {
+        .circular
+    }
+}
