@@ -200,6 +200,18 @@ public func roundedRectangle(
     .roundedRectangle(viewStore: .init(id: id, modifiers: modifiers, cornerRadiusKey: cornerRadiusKey, widthKey: widthKey, heightKey: heightKey, cornerRadius: cornerRadius, width: width, height: height, style: style))
 }
 
+public func circle(id: String = "", modifiers: [InjectedModifier] = []) -> InjectedView {
+    .circle(viewStore: .init(id: id, modifiers: modifiers))
+}
+
+public func ellipse(id: String = "", modifiers: [InjectedModifier] = []) -> InjectedView {
+    .ellipse(viewStore: .init(id: id, modifiers: modifiers))
+}
+
+public func capsule(id: String = "", modifiers: [InjectedModifier] = [], style: InjectedRoundedCornerStyle? = nil) -> InjectedView {
+    .capsule(viewStore: .init(id: id, modifiers: modifiers, style: style))
+}
+
 public func spacer(
     id: String = "",
     modifiers: [InjectedModifier] = []) -> InjectedView {

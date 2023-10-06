@@ -103,6 +103,18 @@ public init(state: StateSignal,
         case .roundedRectangle(let viewStore):
             
             RoundedRectangleInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+        
+        case .circle(let viewStore):
+            
+            CircleInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
+        case .ellipse(let viewStore):
+            
+            EllipseInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
+        case .capsule(let viewStore):
+            
+            CapsuleInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
             
         case .spacer(let viewStore):
 
