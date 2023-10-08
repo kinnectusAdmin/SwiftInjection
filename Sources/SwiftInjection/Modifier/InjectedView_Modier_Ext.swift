@@ -49,6 +49,14 @@ public extension InjectedView {
             return .lazyVStack(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier), alignmentKey: viewStore.alignmentKey, spacingKey: viewStore.spacingKey, content1: viewStore.content1, content2: viewStore.content2, content3: viewStore.content3, content4: viewStore.content4, content5: viewStore.content5, content6: viewStore.content6, content7: viewStore.content7, content8: viewStore.content8, content9: viewStore.content9, content10: viewStore.content10))
         case let .lazyHStack(viewStore):
             return .lazyHStack(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier), alignmentKey: viewStore.alignmentKey, spacingKey: viewStore.spacingKey, content1: viewStore.content1, content2: viewStore.content2, content3: viewStore.content3, content4: viewStore.content4, content5: viewStore.content5, content6: viewStore.content6, content7: viewStore.content7, content8: viewStore.content8, content9: viewStore.content9, content10: viewStore.content10))
+        case let .grid(viewStore):
+            return .grid(viewStore: viewStore |> prop(\.modifiers)({ $0.appending(modifier)}))
+        case let .gridRow(viewStore):
+            return .gridRow(viewStore: viewStore |> prop(\.modifiers)({ $0.appending(modifier)}))
+        case let .lazyHGrid(viewStore):
+            return .lazyHGrid(viewStore: viewStore |> prop(\.modifiers)({ $0.appending(modifier)}))
+        case let .lazyVGrid(viewStore):
+            return .lazyVGrid(viewStore: viewStore |> prop(\.modifiers)({ $0.appending(modifier)}))
         case .color(let viewStore):
             return .color(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier), colorKey: viewStore.colorKey))
         case .rectangle(let viewStore):

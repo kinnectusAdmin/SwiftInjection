@@ -57,7 +57,74 @@ public func lazyHStack(
         let content = content.map { $0() }.toTenLengthTuple()
          return   .lazyHStack(viewStore: .init(id: id, modifiers: modifiers, alignmentKey: alignmentKey, spacingKey: spacingKey, content1: content.0, content2: content.1, content3: content.2, content4: content.3, content5: content.4, content6: content.5, content7: content.6, content8: content.7, content9: content.8, content10: content.9))
 }
-
+public func grid(id: String = "",
+                 modifiers: [InjectedModifier] = [],
+                 alignment: InjectedAlignment? = nil,
+                 horizontalSpacing: Double? = nil,
+                 verticalSpacing: Double? = nil,
+                 content1: InjectedView = .empty(),
+                 content2: InjectedView? = nil,
+                 content3: InjectedView? = nil,
+                 content4: InjectedView? = nil,
+                 content5: InjectedView? = nil,
+                 content6: InjectedView? = nil,
+                 content7: InjectedView? = nil,
+                 content8: InjectedView? = nil,
+                 content9: InjectedView? = nil,
+                 content10: InjectedView? = nil) -> InjectedView {
+    .grid(viewStore: .init(id: id, modifiers: modifiers, alignment: alignment, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, content1: content1, content2: content2, content3: content3, content4: content4, content5: content5, content6: content6, content7: content7, content8: content8, content9: content9, content10: content10))
+}
+public func gridRow(id: String = "",
+                 modifiers: [InjectedModifier] = [],
+                 verticalAlignment: InjectedVerticalAlignment? = nil,
+                 content1: InjectedView = .empty(),
+                 content2: InjectedView? = nil,
+                 content3: InjectedView? = nil,
+                 content4: InjectedView? = nil,
+                 content5: InjectedView? = nil,
+                 content6: InjectedView? = nil,
+                 content7: InjectedView? = nil,
+                 content8: InjectedView? = nil,
+                 content9: InjectedView? = nil,
+                 content10: InjectedView? = nil) -> InjectedView {
+    .gridRow(viewStore: .init(id: id, modifiers: modifiers, verticalAlignment: verticalAlignment, content1: content1, content2: content2, content3: content3, content4: content4, content5: content5, content6: content6, content7: content7, content8: content8, content9: content9, content10: content10))
+}
+public func lazyHGrid(id: String = "",
+                      modifiers: [InjectedModifier] = [],
+                      rows: [InjectedGridItem] = [],
+                      verticalAlignment: InjectedVerticalAlignment = .center,
+                      spacing: Double? = nil,
+                      pinnedViews: InjectedPinnedScrollableViews = .none,
+                      content1: InjectedView = .empty(),
+                      content2: InjectedView? = nil,
+                      content3: InjectedView? = nil,
+                      content4: InjectedView? = nil,
+                      content5: InjectedView? = nil,
+                      content6: InjectedView? = nil,
+                      content7: InjectedView? = nil,
+                      content8: InjectedView? = nil,
+                      content9: InjectedView? = nil,
+                      content10: InjectedView? = nil) -> InjectedView {
+    .lazyHGrid(viewStore: .init(id: id, modifiers: modifiers, verticalAlignment: verticalAlignment, spacing: spacing, pinnedViews: pinnedViews, content1: content1, content2: content2, content3: content3, content4: content4, content5: content5, content6: content6, content7: content7, content8: content8, content9: content9, content10: content10))
+}
+public func lazyVGrid(id: String = "",
+                      modifiers: [InjectedModifier] = [],
+                      columns: [InjectedGridItem] = [],
+                      horizontalAlignment: InjectedHorizontalAlignment = .center,
+                      spacing: Double? = nil,
+                      pinnedViews: InjectedPinnedScrollableViews = .none,
+                      content1: InjectedView = .empty(),
+                      content2: InjectedView? = nil,
+                      content3: InjectedView? = nil,
+                      content4: InjectedView? = nil,
+                      content5: InjectedView? = nil,
+                      content6: InjectedView? = nil,
+                      content7: InjectedView? = nil,
+                      content8: InjectedView? = nil,
+                      content9: InjectedView? = nil,
+                      content10: InjectedView? = nil) -> InjectedView {
+    .lazyVGrid(viewStore: .init(id: id, modifiers: modifiers, columns: columns, horizontalAlignment: horizontalAlignment, spacing: spacing, pinnedViews: pinnedViews, content1: content1, content2: content2, content3: content3, content4: content4, content5: content5, content6: content6, content7: content7, content8: content8, content9: content9, content10: content10))
+}
 public func list(
     id: String = "",
     modifiers: [InjectedModifier] = [],

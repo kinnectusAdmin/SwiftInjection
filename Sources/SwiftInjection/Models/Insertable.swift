@@ -146,6 +146,22 @@ public init(state: StateSignal,
                 store: .init(store: viewStore, stateSubject: state),
                 container: container)
             
+        case let .grid(viewStore):
+            
+            GridInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+        
+        case let .gridRow(viewStore):
+            
+            GridRowInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
+        case let .lazyHGrid(viewStore):
+            
+            LazyHGridInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+        
+        case let .lazyVGrid(viewStore):
+            
+            LazyVGridInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
         }
     }
     

@@ -33,7 +33,7 @@ class VStackStore: ObservableObject {
         
         $state.map { state in
             let alignment = findStringValue(stateId: state.id, id: store.alignmentKey, state: state) ?? ""
-            return VStackAlignment(rawValue: alignment)?.render ?? .center
+            return InjectedHorizontalAlignment(rawValue: alignment)?.render ?? .center
         }.compactMap { $0 }.assign(to: &$alignment)
         
         $state.map { state in

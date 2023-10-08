@@ -42,7 +42,7 @@ public extension InjectedView {
     func idealHeight(stateId: String = "", heightId: String = "", height: Double? = nil) -> InjectedView {
         self.addModifier(modifier: .idealHeight(stateId: stateId, heightId: heightId, height: height))
     }
-    func alignment(stateId: String = "", alignmentId: String = "", alignment: ZStackAlignment? = nil) -> InjectedView {
+    func alignment(stateId: String = "", alignmentId: String = "", alignment: InjectedAlignment? = nil) -> InjectedView {
         self.addModifier(modifier: .alignment(stateId: stateId, alignmentId: alignmentId, alignment: alignment))
     }
     func padding(stateId: String = "", edgeSetId: String = "", lengthId: String = "", edgeSet: InjectedEdgeSet? = nil, length: Double? = nil) -> InjectedView {
@@ -60,7 +60,7 @@ public extension InjectedView {
         self.addModifier(modifier: .foregroundColor(stateId: stateId, valueId: valueId, colorHex: colorHex))
     }
     
-    func background(content: InjectedView, alignment: ZStackAlignment? = nil) -> InjectedView {
+    func background(content: InjectedView, alignment: InjectedAlignment? = nil) -> InjectedView {
         self.addModifier(modifier: .background(content: content, alignment: alignment))
     }
     

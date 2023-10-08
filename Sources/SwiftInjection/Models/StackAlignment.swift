@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public enum VStackAlignment: String, Codable {
+public enum InjectedHorizontalAlignment: String, Codable {
     case center, leading, trailing, listRowSeparatorLeading, listRowSeparatorTrailing
     
     var render: HorizontalAlignment {
@@ -27,7 +27,7 @@ public enum VStackAlignment: String, Codable {
     }
 }
 
-public enum HStackAlignment: String, Codable {
+public enum InjectedVerticalAlignment: String, Codable {
     case bottom, center, top, firstTextBaseline, lastTextBaseline
     
     var render: VerticalAlignment {
@@ -46,7 +46,7 @@ public enum HStackAlignment: String, Codable {
     }
 }
 
-public enum ZStackAlignment: String, Codable {
+public enum InjectedAlignment: String, Codable {
     case trailing, leading, center, top, bottom, bottomLeading, bottomTrailing, topLeading, topTrailing, centerFirstTextBaseline, centerLastTextBaseline, leadingFirstTextBaseline, leadingLastTextBaseline, trailingFirstTextBaseline, trailingLastTextBaseline
     
     var render: Alignment {

@@ -32,7 +32,7 @@ class ZStackStore: ObservableObject {
         
         $state.map { state  -> Alignment in
             let alignment = findStringValue(stateId: state.id, id: store.alignmentKey, state: state) ?? ""
-            return ZStackAlignment(rawValue: alignment)?.render ?? .center
+            return InjectedAlignment(rawValue: alignment)?.render ?? .center
         }.compactMap { $0 }.assign(to: &$alignment)
         
     }

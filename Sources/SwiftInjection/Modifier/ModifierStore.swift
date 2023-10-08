@@ -266,7 +266,7 @@ struct ModifierStore: ViewModifier {
                 return AnyView(content)
             }
         case let .alignment(stateId, alignmentId, alignment):
-            if let alignment = findValue(type: ZStackAlignment.self, stateId: stateId, id: alignmentId, state: state.value) {
+            if let alignment = findValue(type: InjectedAlignment.self, stateId: stateId, id: alignmentId, state: state.value) {
                 return AnyView(
                     content.frame(alignment: alignment.render)
                 )
