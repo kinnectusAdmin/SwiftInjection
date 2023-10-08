@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct GridRowInsertable: View {
-    var store: GridRowStore
+    @ObservedObject var store: GridRowStore
     var container: ViewStoresContainer
     var gridRowContent: some View {
         Group {

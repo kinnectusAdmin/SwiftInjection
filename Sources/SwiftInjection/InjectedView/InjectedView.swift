@@ -47,6 +47,7 @@ indirect public enum InjectedView: Codable, Hashable {
     case ellipse(viewStore: EllipseViewStore)
     case capsule(viewStore: CapsuleViewStore)
     case spacer(viewStore: SpacerViewStore)
+    case divider(viewStore: DividerViewStore)
     case `if`(viewStore: IfViewStore)
     // case `ifLet`(conditionKey: String, modifiers: [InjectedModifier], content: InjectedViewStore)
     // case `switch`(  conditionKey: String,
@@ -127,6 +128,8 @@ indirect public enum InjectedView: Codable, Hashable {
         case .capsule(let viewStore):
             return viewStore.id
         case .spacer(let viewStore):
+            return viewStore.id
+        case .divider(let viewStore):
             return viewStore.id
         case .if(let viewStore):
             return viewStore.id

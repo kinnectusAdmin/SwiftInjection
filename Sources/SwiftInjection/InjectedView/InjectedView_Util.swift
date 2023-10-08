@@ -285,3 +285,8 @@ public func spacer(
         .spacer(viewStore: .init(id: id, modifiers: modifiers))
 }
 
+public func divider(
+    id: String = "",
+    modifiers: [InjectedModifier] = []) -> InjectedView {
+        .divider(viewStore: .init(id: id, modifiers: modifiers))
+}

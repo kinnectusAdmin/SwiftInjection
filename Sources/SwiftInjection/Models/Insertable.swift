@@ -119,7 +119,11 @@ public init(state: StateSignal,
         case .spacer(let viewStore):
 
             SpacerInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
+        
+        case .divider(let viewStore):
 
+            DividerInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
         case .if(let viewStore):
 
             IfInsertable(store: .init(store: viewStore, stateSubject: state), container: container)

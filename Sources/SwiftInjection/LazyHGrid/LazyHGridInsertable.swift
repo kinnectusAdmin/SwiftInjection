@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct LazyHGridInsertable: View {
-    var store: LazyHGridStore
+    @ObservedObject var store: LazyHGridStore
     var container: ViewStoresContainer
     var gridContent: some View {
         Group {

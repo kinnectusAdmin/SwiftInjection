@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct GridInsertable: View {
-    var store: GridStore
+    @ObservedObject var store: GridStore
     var container: ViewStoresContainer
     var gridContent: some View {
         Group {

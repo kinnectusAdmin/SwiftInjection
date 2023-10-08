@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct CapsuleInsertable: View {
-    var store: CapsuleStore
+    @ObservedObject var store: CapsuleStore
     var container: ViewStoresContainer
     var body: some View {
         if let style = store.viewStore.style {

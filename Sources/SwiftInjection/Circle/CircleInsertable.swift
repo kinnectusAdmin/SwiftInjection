@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct CircleInsertable: View {
-    var store: CircleStore
+    @ObservedObject var store: CircleStore
     var container: ViewStoresContainer
     var body: some View {
         Circle().addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSubject, container: container).eraseToAnyView()
