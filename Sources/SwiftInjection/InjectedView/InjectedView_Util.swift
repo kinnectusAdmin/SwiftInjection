@@ -290,3 +290,38 @@ public func divider(
     modifiers: [InjectedModifier] = []) -> InjectedView {
         .divider(viewStore: .init(id: id, modifiers: modifiers))
 }
+
+func progressView(id: String = "", modifiers: [InjectedModifier] = [], titleKey: String = "", title: String = "") -> InjectedView {
+    .progressView(viewStore: .init(id: id, modifiers: modifiers, composition: .title(titleKey: titleKey, title: title)))
+}
+func progressView(id: String = "", modifiers: [InjectedModifier] = [], titleKey: String = "", valueKey: String = "", totalKey: String = "", title: String = "") -> InjectedView {
+    .progressView(viewStore: .init(id: id, modifiers: modifiers, composition: .title_value(titleKey: titleKey, valueKey: valueKey, totalKey: totalKey, title: title)))
+}
+func progressView(id: String = "", modifiers: [InjectedModifier] = [], label: InjectedView) -> InjectedView {
+    .progressView(viewStore: .init(id: id, modifiers: modifiers, composition: .label(label)))
+}
+func progressView(id: String = "", modifiers: [InjectedModifier] = [], lowerDate: Date, upperDate: Date) -> InjectedView {
+    .progressView(viewStore: .init(id: id, modifiers: modifiers, composition: .timerInterval(lowerDate: lowerDate, upperDate: upperDate)))
+}
+func progressView(id: String = "", modifiers: [InjectedModifier] = [], lowerDate: Date, upperDate: Date, label: InjectedView) -> InjectedView {
+    .progressView(viewStore: .init(id: id, modifiers: modifiers, composition: .timerInterval_label(lowerDate: lowerDate, upperDate: upperDate, label: label)))
+}
+func progressView(id: String = "", modifiers: [InjectedModifier] = [], lowerDate: Date, upperDate: Date, countsdown: Bool, label: InjectedView, currentValueLabel: InjectedView) -> InjectedView {
+    .progressView(viewStore: .init(id: id, modifiers: modifiers, composition: .timerInterval_countsdown_label_currentValueLabel(lowerDate: lowerDate, upperDate: upperDate, countsdown: countsdown, label: label, currentValueLabel: currentValueLabel)))
+}
+
+func progressView(id: String = "", modifiers: [InjectedModifier] = []) -> InjectedView {
+    .progressView(viewStore: .init(id: id, modifiers: modifiers, composition: .standard))
+}
+
+func progressView(id: String = "", modifiers: [InjectedModifier] = [], valueKey: String, totalKey: String) -> InjectedView {
+    .progressView(viewStore: .init(id: id, modifiers: modifiers, composition: .value_total(valueKey: valueKey, totalKey: totalKey)))
+}
+
+func progressView(id: String = "", modifiers: [InjectedModifier] = [], valueKey: String, totalKey: String, label: InjectedView) -> InjectedView {
+        .progressView(viewStore: .init(id: id, modifiers: modifiers, composition: .value_total_label(valueKey: valueKey, totalKey: totalKey, label: label)))
+}
+
+func progressView(id: String = "", modifiers: [InjectedModifier] = [], valueKey: String , totalKey: String, label: InjectedView, currentValueLabel: InjectedView) -> InjectedView {
+    .progressView(viewStore: .init(id: id, modifiers: modifiers, composition: .value_total_label_currentValueLabel(valueKey: valueKey, totalKey: totalKey, label: label, currentValueLabel: currentValueLabel)))
+}

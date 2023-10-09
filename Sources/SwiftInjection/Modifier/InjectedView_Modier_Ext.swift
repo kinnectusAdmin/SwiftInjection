@@ -73,6 +73,8 @@ public extension InjectedView {
             return .spacer(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier)))
         case .divider(let viewStore):
             return .divider(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier)))
+        case .progressView(viewStore: let viewStore):
+            return .progressView(viewStore: .init(id: viewStore.id, modifiers: viewStore.modifiers.appending(modifier), composition: viewStore.composition))
         }
     }
 }

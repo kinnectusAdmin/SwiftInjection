@@ -166,6 +166,10 @@ public init(state: StateSignal,
             
             LazyVGridInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
             
+        case let .progressView(viewStore):
+            
+            ProgressViewInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
         }
     }
     

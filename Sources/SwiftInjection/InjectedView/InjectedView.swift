@@ -49,6 +49,7 @@ indirect public enum InjectedView: Codable, Hashable {
     case spacer(viewStore: SpacerViewStore)
     case divider(viewStore: DividerViewStore)
     case `if`(viewStore: IfViewStore)
+    case progressView(viewStore: ProgressViewStore)
     // case `ifLet`(conditionKey: String, modifiers: [InjectedModifier], content: InjectedViewStore)
     // case `switch`(  conditionKey: String,
     //                 modifiers: [InjectedModifier],
@@ -132,6 +133,8 @@ indirect public enum InjectedView: Codable, Hashable {
         case .divider(let viewStore):
             return viewStore.id
         case .if(let viewStore):
+            return viewStore.id
+        case .progressView(let viewStore):
             return viewStore.id
         }
     }
