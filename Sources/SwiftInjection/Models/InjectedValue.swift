@@ -34,20 +34,19 @@ public enum InjectedValue: Codable, Equatable {
         lhs.stateId == rhs.stateId && lhs.id == rhs.id
     }
     
-    
     case string(stateId: String, id: String, value: String)
     case integer(stateId: String, id:String, value: Int)
     case double(stateId: String, id: String, value: Double)
     case boolean(stateId: String, id: String, value: Bool)
     case data(stateId: String, id: String, value: Data)
     case state(stateId: String, id: String, value: InjectedState)
+    case stateCollection(stateId: String, id: String, value: [String: InjectedState])
     case stringArray(stateId: String, id: String, value: [String])
     case integerArray(stateId: String, id: String, value: [Int])
     case doubleArray(stateId: String, id: String, value: [Double])
     case booleanArray(stateId: String, id: String, value: [Bool])
     case dataArray(stateId: String, id: String, value: [Data])
     case stateArray(stateId: String, id: String, value: [InjectedState])
-
     var stateId: String {
         switch self {
         case .string(let stateId, _, _),
@@ -61,6 +60,7 @@ public enum InjectedValue: Codable, Equatable {
                 .booleanArray(let stateId, _, _),
                 .dataArray(let stateId, _, _),
                 .state(let stateId, _, _),
+                .stateCollection(let stateId, _, _),
                 .stateArray(let stateId, _, _):
             return "\(stateId)"
         }
@@ -79,6 +79,7 @@ public enum InjectedValue: Codable, Equatable {
                 .booleanArray(_, let id , _),
                 .dataArray(_, let id , _),
                 .state(_, let id, _),
+                .stateCollection(_, let id, _),
                 .stateArray(_, let id, _):
             return "\(id)"
         }
@@ -184,10 +185,21 @@ public enum InjectedValue: Codable, Equatable {
 
      var stateArray: [InjectedState] {
         switch self {
+        //TODO: Should this casee be used?
         case .state(_, _, let value):
             return [value]
+        case .stateArray(_, _, let value):
+            return value
         default:
             return []
+        }
+    }
+    var stateCollection: [String: InjectedState] {
+        switch self {
+        case .stateCollection(_, _, let value):
+            return value
+        default:
+            return [:]
         }
     }
     

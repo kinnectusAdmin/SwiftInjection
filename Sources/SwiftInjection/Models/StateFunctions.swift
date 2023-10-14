@@ -128,6 +128,16 @@ func findStateValue(stateId: String, id: String, state: InjectedState) -> Inject
     }
 }
 
+func findStateCollection(stateId: String, id: String, state: InjectedState) -> [String: InjectedState]? {
+    if state.id == stateId || stateId == .empty {
+        return state.state.first(where: {$0.id == id})?.stateCollection
+    } else if let state = findStateValue(stateId: state.id, id: stateId, state: state) {
+        return findStateCollection(stateId: state.id, id: id, state: state)
+    } else {
+        return nil
+    }
+}
+
 func findInjectedValue(stateId: String, id: String, state: InjectedState) -> InjectedValue? {
     if state.id == stateId || stateId == .empty {
         return state.state.first(where: {$0.id == id})
