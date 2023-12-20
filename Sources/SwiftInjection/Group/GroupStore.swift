@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  GroupStore.swift
 //  
 //
 //  Created by Blake Osonduagwueki on 10/22/23.
