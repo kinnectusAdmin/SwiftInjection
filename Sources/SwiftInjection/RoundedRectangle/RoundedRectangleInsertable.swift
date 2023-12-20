@@ -16,22 +16,22 @@ struct RoundedRectangleInsertable: View {
         case let .cornerRadius(radius):
             
             RoundedRectangle(cornerRadius: CGFloat(radius))
-                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSubject, container: container).eraseToAnyView()
+                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSignal, container: container).eraseToAnyView()
             
         case let .cornerRadius_Style(radius, style):
             
             RoundedRectangle(cornerRadius: CGFloat(radius), style: style.render)
-                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSubject, container: container).eraseToAnyView()
+                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSignal, container: container).eraseToAnyView()
 
         case let .sizeWidth_Height(width, height):
        
             RoundedRectangle(cornerSize: .init(width: CGFloat(width), height: CGFloat(height)))
-                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSubject, container: container).eraseToAnyView()
+                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSignal, container: container).eraseToAnyView()
             
         case let .sizeWidth_Height_Style(width, height, style):
             
             RoundedRectangle(cornerSize: .init(width: CGFloat(width), height: CGFloat(height)), style: style.render)
-                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSubject, container: container).eraseToAnyView()
+                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSignal, container: container).eraseToAnyView()
 
         }
     }

@@ -12,15 +12,15 @@ final class LabelStore: ObservableObject {
     @Published private var state: InjectedState
     @Published var labelResult: LabelResult = .none
     let viewStore: LabelViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     
-    init(viewStore: LabelViewStore, stateSubject: StateSignal) {
+    init(viewStore: LabelViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
         
         
-        stateSubject.eraseToAnyPublisher().assign(to: &$state)
+        stateSignal.eraseToAnyPublisher().assign(to: &$state)
         
         let labelTitle = $state.map { state -> String? in
             if let title = findStringValue(stateId: state.id, id: viewStore.titleKey, state: state) {

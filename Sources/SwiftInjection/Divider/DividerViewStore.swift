@@ -7,6 +7,6 @@
 
 import Foundation
 public struct DividerViewStore: Codable {
-    var id: String = ""
-    var modifiers: [InjectedModifier] = []
+    public var id: String = ""
+    public var modifiers: [InjectedModifier] = []
 }

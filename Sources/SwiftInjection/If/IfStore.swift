@@ -10,20 +10,20 @@ import Combine
 
 class IfStore: ObservableObject {
     var viewStore: IfViewStore
-    var stateSubject: StateSignal
+    var stateSignal: StateSignal
     @Published var state: InjectedState
     @Published var condition: Bool = false
     
-    init(store: IfViewStore, stateSubject: StateSignal) {
-        self.viewStore = store
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
-        self.condition = findBooleanValue(stateId: stateSubject.value.id, id: store.conditionKey, state: state) ?? false
+    init(viewStore: IfViewStore, stateSignal: StateSignal) {
+        self.viewStore = viewStore
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
+        self.condition = findBooleanValue(stateId: stateSignal.value.id, id: viewStore.conditionKey, state: state) ?? false
 
-        self.stateSubject.eraseToAnyPublisher().assign(to: &$state)
+        self.stateSignal.eraseToAnyPublisher().assign(to: &$state)
 
-        stateSubject.map { state in 
-            findBooleanValue(stateId: state.id, id: store.conditionKey, state: state)
+        stateSignal.map { state in 
+            findBooleanValue(stateId: state.id, id: viewStore.conditionKey, state: state)
         }
         .compactMap { $0 }
         .assign(to: &$condition)

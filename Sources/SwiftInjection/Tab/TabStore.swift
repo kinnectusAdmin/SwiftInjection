@@ -1,5 +1,5 @@
 //
-//  File 2.swift
+//  TabStore.swift
 //  
 //
 //  Created by Blake Osonduagwueki on 9/27/23.
@@ -11,10 +11,10 @@ import SwiftUI
 class TabStore: ObservableObject {
     
     var viewStore: TabViewStore
-    var stateSubject: StateSignal
+    var stateSignal: StateSignal
     
-    init(viewStore: TabViewStore, stateSubject: StateSignal) {
+    init(viewStore: TabViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
+        self.stateSignal = stateSignal
     }
 }

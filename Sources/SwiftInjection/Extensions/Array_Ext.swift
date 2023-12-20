@@ -6,6 +6,8 @@
 //
 
 import Foundation
+
+typealias TenLengthTuple<T> = (T, T?, T?, T?, T?, T?, T?, T?, T?, T?)
 public extension Array {
     
     public func itemAtIndex(index: Int) -> Self.Element? {

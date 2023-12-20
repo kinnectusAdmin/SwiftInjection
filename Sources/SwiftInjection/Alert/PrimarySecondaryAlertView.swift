@@ -13,29 +13,29 @@ struct PrimarySecondaryAlertView {
     var state: StateSignal
     var container: ViewStoresContainer
     var titleStore: TextStore {
-        .init(stateSubject: state, store: viewStore.title)
+        .init(viewStore: viewStore.title, stateSignal: state)
     }
     private var titleModifiers: [InjectedModifier] {
         viewStore.title.modifiers
     }
     private var messageStore: TextStore {
-        .init(stateSubject: state, store: viewStore.message)
+        .init(viewStore: viewStore.message, stateSignal: state)
     }
     private var messageModifiers: [InjectedModifier] {
         viewStore.message.modifiers
     }
     private var primaryAlertButton: AlertButtonStore {
-        AlertButtonStore(container: container, state: state, alertButton: viewStore.primary)
+        AlertButtonStore(container: container, stateSignal: state, alertButton: viewStore.primary)
     }
     private var secondaryAlertButton: AlertButtonStore {
-        AlertButtonStore(container: container, state: state, alertButton: viewStore.secondary)
+        AlertButtonStore(container: container, stateSignal: state, alertButton: viewStore.secondary)
     }
 
     private var title: Text {
-        (Text(titleStore.text).addModifiers(mods: titleStore.viewStore.modifiers, state: titleStore.stateSubject, container: container) as? Text) ?? Text(titleStore.text)
+        (Text(titleStore.text).addModifiers(mods: titleStore.viewStore.modifiers, stateSignal: titleStore.stateSignal, container: container) as? Text) ?? Text(titleStore.text)
     }
     private var message: Text {
-        (Text(messageStore.text).addModifiers(mods: messageStore.viewStore.modifiers, state: messageStore.stateSubject, container: container) as? Text) ?? Text(messageStore.text)
+        (Text(messageStore.text).addModifiers(mods: messageStore.viewStore.modifiers, stateSignal: messageStore.stateSignal, container: container) as? Text) ?? Text(messageStore.text)
     }
     
     var render: Alert {

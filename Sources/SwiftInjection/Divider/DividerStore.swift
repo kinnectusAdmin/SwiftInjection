@@ -10,10 +10,10 @@ import SwiftUI
 
 final class DividerStore: ObservableObject {
     let viewStore: DividerViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     
-    init(viewStore: DividerViewStore, stateSubject: StateSignal) {
+    init(viewStore: DividerViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
+        self.stateSignal = stateSignal
     }
 }

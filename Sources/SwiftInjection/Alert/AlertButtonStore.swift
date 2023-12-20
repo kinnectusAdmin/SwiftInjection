@@ -11,17 +11,17 @@ import SwiftUI
 
 struct AlertButtonStore {
     var container: ViewStoresContainer
-    var state: StateSignal
+    var stateSignal: StateSignal
     var alertButton: AlertButton
     
     var render: Alert.Button {
         switch alertButton {
         case .cancel(let label, let action):
-            let labelTextStore = TextStore(stateSubject: state, store: label)
+            let labelTextStore = TextStore(viewStore: label, stateSignal: stateSignal)
             return Alert.Button.cancel(
                 Text(labelTextStore.text)
                     .addModifiers(mods: labelTextStore.viewStore.modifiers,
-                                  state: state,
+                                  stateSignal: stateSignal,
                                   container: container) as? Text ?? Text(labelTextStore.text)
             ) {
                 //Perform operation associated with textStore
@@ -30,11 +30,11 @@ struct AlertButtonStore {
                 }
             }
         case .default(let label, let action):
-            let labelTextStore = TextStore(stateSubject: state, store: label)
+            let labelTextStore = TextStore(viewStore: label, stateSignal: stateSignal)
             return Alert.Button.default(
                 Text(labelTextStore.text)
                     .addModifiers(mods: labelTextStore.viewStore.modifiers,
-                                  state: state,
+                                  stateSignal: stateSignal,
                                   container: container) as? Text ?? Text(labelTextStore.text)
             ) {
                 //Perform operation associated with textStore
@@ -43,11 +43,11 @@ struct AlertButtonStore {
                 }
             }
         case .destructive(let label, let action):
-            let labelTextStore = TextStore(stateSubject: state, store: label)
+            let labelTextStore = TextStore(viewStore: label, stateSignal: stateSignal)
             return Alert.Button.destructive(
                 Text(labelTextStore.text)
                     .addModifiers(mods: labelTextStore.viewStore.modifiers,
-                                  state: state,
+                                  stateSignal: stateSignal,
                                   container: container) as? Text ?? Text(labelTextStore.text)
             ) {
                 //Perform operation associated with textStore
@@ -59,8 +59,8 @@ struct AlertButtonStore {
     }
     
     private func didCommitAction(operation: InjectedOperation) {
-        if let state = InjectedFunctionBuilder(state: state, operation: operation).state?.value {
-            self.state.send(state)
+        if let state = InjectedFunctionBuilder(stateSignal: stateSignal, operation: operation).stateSignal?.value {
+            self.stateSignal.send(state)
         }
     }
 }

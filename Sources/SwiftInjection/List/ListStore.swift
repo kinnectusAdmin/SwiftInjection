@@ -17,29 +17,29 @@ class ListStore: ObservableObject {
         }
     }
     @Published var viewStore: ListViewStore
-    @Published var stateSubject: StateSignal
+    @Published var stateSignal: StateSignal
     @Published var state: InjectedState
     private var cancellables = Set<AnyCancellable>()
     init(viewStore: ListViewStore,
-         stateSubject: StateSignal) {
+         stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
+        self.stateSignal = stateSignal
 
-        self.state = stateSubject.value
+        self.state = stateSignal.value
         
-        stateSubject.eraseToAnyPublisher().map { state in
+        stateSignal.eraseToAnyPublisher().map { state in
             let listKey = viewStore.listKey
             
-            if let list = state.state.first(where: {$0.id == listKey})?.array as? [InjectedValue] {
-                return list.map { InjectedState(id: $0.id, state: [$0]) }
+            if let list = state.map(key: listKey)?.array as? [InjectedValue] {
+                return list.map { InjectedState(id: $0.id, parameter1: $0) }
             } else {
                 return []
             }
         }.assign(to: &$listStates)
-        stateSubject.eraseToAnyPublisher().assign(to: &$state)
+        stateSignal.eraseToAnyPublisher().assign(to: &$state)
     }
     
     public func stateForItem(_ itemState: InjectedState) -> StateSignal {
-        itemStateSubjects.first(where: {$0.value.id == itemState.id}) ?? StateSignal(InjectedState.init(id: "", state: []))
+        itemStateSubjects.first(where: {$0.value.id == itemState.id}) ?? StateSignal(InjectedState.init(id: ""))
     }
 }

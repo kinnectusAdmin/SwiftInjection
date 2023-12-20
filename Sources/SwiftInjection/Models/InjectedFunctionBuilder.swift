@@ -11,25 +11,25 @@ import Combine
 @resultBuilder
 public struct InjectedFunctionBuilder {
     
-    var state: StateSignal?
+    var stateSignal: StateSignal?
     var operation: InjectedOperation
     static var cancellables = Set<AnyCancellable>()
     
     static func buildBlock(_ components: InjectedFunctionBuilder...) -> InjectedFunctionBuilder {
-        return components.reduce(InjectedFunctionBuilder(operation: .noOperation)) { partialResult, next in
-            if let state = partialResult.state ?? next.state {
-                performOperation(state: state, operation: next.operation)
-                return InjectedFunctionBuilder(state: state, operation: next.operation)
+        return components.reduce(InjectedFunctionBuilder(stateSignal: nil, operation: .noOperation)) { partialResult, next in
+            if let stateSignal = partialResult.stateSignal ?? next.stateSignal {
+                performOperation(stateSignal: stateSignal, operation: next.operation)
+                return InjectedFunctionBuilder(stateSignal: stateSignal, operation: next.operation)
             }
-            return InjectedFunctionBuilder(state: nil, operation: next.operation)
+            return InjectedFunctionBuilder(stateSignal: nil, operation: next.operation)
         }
     }
     
-    static func performOperation(state: StateSignal, operation: InjectedOperation) {
+    static func performOperation(stateSignal: StateSignal, operation: InjectedOperation) {
         switch operation {
         case .asyncAfter(let operation, let delay):
             Future<InjectedState, Never> { promise in
-                promise(.success(provideStateTransformedByOperation(state: state.value, operation: operation)))
+                promise(.success(provideStateTransformedByOperation(state: stateSignal.value, operation: operation)))
             }.delay(for: .seconds(delay), scheduler: RunLoop.main)
             .sink { completion in
                 switch completion {
@@ -39,12 +39,12 @@ public struct InjectedFunctionBuilder {
                     break
                 }
             } receiveValue: { futureState in
-                state.value = futureState
+                stateSignal.value = futureState
             }.store(in: &cancellables)
         
         case .async(let operation):
             Future<InjectedState, Never> { promise in
-                promise(.success(provideStateTransformedByOperation(state: state.value, operation: operation)))
+                promise(.success(provideStateTransformedByOperation(state: stateSignal.value, operation: operation)))
             }.sink { completion in
                 switch completion {
                 case .failure(let error):
@@ -53,29 +53,23 @@ public struct InjectedFunctionBuilder {
                     break
                 }
             } receiveValue: { futureState in
-                state.value = futureState
+                stateSignal.value = futureState
             }.store(in: &cancellables)
         default:
-            state.send(provideStateTransformedByOperation(state: state.value, operation: operation))
+            stateSignal.send(provideStateTransformedByOperation(state: stateSignal.value, operation: operation))
         }
     }
     
     static func provideStateUpdatedByValue(_ state: InjectedState, _ updatedValue: InjectedValue) -> InjectedState {
-        state |> prop(\.state) ({
-            $0.map { value in
-                if value.id == updatedValue.id {
-                    return updatedValue
-                } else {
-                    return value
-                }
-            }
+        state |> prop(state.keyValue(for: updatedValue.id)) ({_ in
+            updatedValue
         })
     }
     
     static func provideStateTransformedByOperation(state: InjectedState, operation: InjectedOperation) -> InjectedState {
         switch operation {
         case .multiplyByInteger(let key, let multiple):
-            if let value = state.state.first(where: {$0.id == key}) {
+            if let value = state.map(key: key) {
                 switch value {
                 case let .double(stateId, id, double):
                     let updateValue = InjectedValue.double(stateId: stateId, id: id, value: double * Double(multiple))
@@ -88,7 +82,7 @@ public struct InjectedFunctionBuilder {
                 }
             }
         case .divideByInteger(let key, let quotient):
-            if let value = state.state.first(where: {$0.id == key}) {
+            if let value = state.map(key:key) {
                 switch value {
                 case let .double(stateId, id, double):
                     let updateValue = InjectedValue.double(stateId: stateId, id: id, value: double / Double(quotient))

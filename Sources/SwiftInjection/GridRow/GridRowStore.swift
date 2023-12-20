@@ -10,14 +10,14 @@ import SwiftUI
 
 final class GridRowStore: ObservableObject {
     let viewStore: GridRowViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     @Published var state: InjectedState
     @Published var gridRowComposition: GridRowComposition = .standard
-    init(viewStore: GridRowViewStore, stateSubject: StateSignal) {
+    init(viewStore: GridRowViewStore, stateSignal: StateSignal) {
         
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
         
         if let alignment = viewStore.verticalAlignment {
             gridRowComposition = .alignment(alignment)

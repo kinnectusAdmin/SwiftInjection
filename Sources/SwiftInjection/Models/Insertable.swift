@@ -12,164 +12,198 @@ import Combine
 
 public struct Insertable: View {
     
-    var state: StateSignal
+    var stateSignal: StateSignal
     var container: ViewStoresContainer
     var viewStore: InjectedView
     
-public init(state: StateSignal,
-         container: ViewStoresContainer,
-         viewStore: InjectedView) {
-        self.state = state
+    public init(stateSignal: StateSignal, container: ViewStoresContainer, viewStore: InjectedView) {
+        self.stateSignal = stateSignal
         self.container = container
         self.viewStore = viewStore
     }
+    
     @ViewBuilder var render: some View {
         switch viewStore {
-
+            
         case .vStack(let viewStore):
-
+            
             VStackInsertable(
-                store: .init(store: viewStore, stateSubject: state),
+                store: .init(viewStore: viewStore, stateSignal: stateSignal),
                 container: container)
-
+            
         case .hStack(let viewStore):
-
+            
             HStackInsertable(
-                store: .init(store: viewStore, stateSubject: state),
+                store: .init(viewStore: viewStore, stateSignal: stateSignal),
                 container: container)
-
+            
         case .zStack(let viewStore):
-
+            
             ZStackInsertable(
-                store: .init(store: viewStore, stateSubject: state),
+                store: .init(viewStore: viewStore, stateSignal: stateSignal),
                 container: container)
-
+            
         case .list(let viewStore):
-
+            
             ListInsertable(
-                store: .init(viewStore: viewStore, stateSubject: state),
+                store: .init(viewStore: viewStore, stateSignal: stateSignal),
                 container: container)
-
+            
         case .forEach(let viewStore):
             
             ForEachInsertable(
-                store: .init(viewStore: viewStore, stateSubject: state),
+                store: .init(viewStore: viewStore, stateSignal: stateSignal),
                 container: container)
-
+            
         case .button(let viewStore):
-
-            ButtonInsertable(container: container, store: .init(store: viewStore, stateSubject: state))
-
+            
+            ButtonInsertable(container: container, store: .init(viewStore: viewStore, stateSignal: stateSignal))
+            
         case .text(let viewStore):
-
-            TextInsertable(store: .init(stateSubject: state, store: viewStore), container: container)
-
+            
+            TextInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
         case .field(let viewStore):
-
-            TextFieldInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
-        
+            
+            TextFieldInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
         case .secureField(let viewStore):
-
-            SecureFieldInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
+            
+            SecureFieldInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .label(let viewStore):
             
-            LabelInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            LabelInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .namedImage(let viewStore), .systemImage(let viewStore), .asyncImage(let viewStore):
-
-            ImageInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
-      
+            
+            ImageInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
         case .tab(let viewStore):
             
-            TabInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            TabInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .navigationStack(let viewStore):
             
-            NavigationStackInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            NavigationStackInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .navigationLink(let viewStore):
             
-            NavigationLinkInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            NavigationLinkInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .color(let viewStore):
-
-            ColorInsertable(store: .init(store: viewStore, state: state), container: container)
+            
+            ColorInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .rectangle(let viewStore):
             
-            RectangleInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            RectangleInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .roundedRectangle(let viewStore):
             
-            RoundedRectangleInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
-        
+            RoundedRectangleInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
         case .circle(let viewStore):
             
-            CircleInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            CircleInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .ellipse(let viewStore):
             
-            EllipseInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            EllipseInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .capsule(let viewStore):
             
-            CapsuleInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            CapsuleInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .spacer(let viewStore):
-
-            SpacerInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
-        
+            
+            SpacerInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
         case .divider(let viewStore):
-
-            DividerInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            
+            DividerInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case .if(let viewStore):
-
-            IfInsertable(store: .init(store: viewStore, stateSubject: state), container: container)
-
+            
+            IfInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
         case .viewStoreReference(let id):
             
             if let viewStore = container.viewStores.first(where: {$0.id == id })  {
-                Insertable(state: state, container: container, viewStore: viewStore)
+                Insertable(stateSignal: stateSignal, container: container, viewStore: viewStore)
             }
-
+            
         case .empty:
             
             EmptyView()
             
         case let .lazyVStack(viewStore):
             
-            LazyVStackInsertable(
-                store: .init(store: viewStore, stateSubject: state),
-                container: container)
-
+            LazyVStackInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
         case let .lazyHStack(viewStore):
             
-            LazyHStackInsertable(
-                store: .init(store: viewStore, stateSubject: state),
-                container: container)
+            LazyHStackInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case let .grid(viewStore):
             
-            GridInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
-        
+            GridInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
         case let .gridRow(viewStore):
             
-            GridRowInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            GridRowInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
         case let .lazyHGrid(viewStore):
             
-            LazyHGridInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            LazyHGridInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
         
-        case let .lazyVGrid(viewStore):
+        case .lazyVGrid(viewStore: let viewStore):
             
-            LazyVGridInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            LazyVGridInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
-        case let .progressView(viewStore):
+        case .progressView(viewStore: let viewStore):
             
-            ProgressViewInsertable(store: .init(viewStore: viewStore, stateSubject: state), container: container)
+            ProgressViewInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
             
+        case .standardTable(viewStore: let viewStore):
+            
+            StandardTableInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
+        case .customTable(viewStore: let viewStore):
+            
+            CustomTableInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
+        case .group(viewStore: let viewStore):
+            
+            GroupInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
+        case .controlGroup(viewStore: let viewStore):
+            
+            ControlGroupInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
+        case .form(viewStore: let viewStore):
+            
+            FormInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
+        case .section(viewStore: let viewStore):
+            
+            SectionInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
+        case .geometryReader(viewStore: let viewStore):
+            
+            GeometryReaderInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
+        case .picker(viewStore: let viewStore):
+            
+            PickerInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
+        case .datePicker(viewStore: let viewStore):
+            
+            DatePickerInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
+            
+        case .scrollView(viewStore: let viewStore):
+            
+            ScrollViewInsertable(store: .init(viewStore: viewStore, stateSignal: stateSignal), container: container)
         }
     }
     

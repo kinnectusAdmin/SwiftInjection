@@ -10,10 +10,10 @@ import SwiftUI
 
 final class CapsuleStore: ObservableObject {
     let viewStore: CapsuleViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     
-    init(viewStore: CapsuleViewStore, stateSubject: StateSignal) {
+    init(viewStore: CapsuleViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
+        self.stateSignal = stateSignal
     }
 }

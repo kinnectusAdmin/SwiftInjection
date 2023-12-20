@@ -15,49 +15,49 @@ class ButtonStore: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     let viewStore: ButtonViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
 
     @InjectedFunctionBuilder var action: InjectedFunctionBuilder {
         InjectedFunctionBuilder(
-            state: stateSubject,
+            stateSignal: stateSignal,
             operation: viewStore.operation1 ?? .noOperation)
         InjectedFunctionBuilder(
-            state: stateSubject,
+            stateSignal: stateSignal,
             operation: viewStore.operation2 ?? .noOperation)
         InjectedFunctionBuilder(
-            state: stateSubject,
+            stateSignal: stateSignal,
             operation: viewStore.operation3 ?? .noOperation)
         InjectedFunctionBuilder(
-            state: stateSubject,
+            stateSignal: stateSignal,
             operation: viewStore.operation4 ?? .noOperation)
         InjectedFunctionBuilder(
-            state: stateSubject,
+            stateSignal: stateSignal,
             operation: viewStore.operation5 ?? .noOperation)
         InjectedFunctionBuilder(
-            state: stateSubject,
+            stateSignal: stateSignal,
             operation: viewStore.operation6 ?? .noOperation)
         InjectedFunctionBuilder(
-            state: stateSubject,
+            stateSignal: stateSignal,
             operation: viewStore.operation7 ?? .noOperation)
         InjectedFunctionBuilder(
-            state: stateSubject,
+            stateSignal: stateSignal,
             operation: viewStore.operation8 ?? .noOperation)
         InjectedFunctionBuilder(
-            state: stateSubject,
+            stateSignal: stateSignal,
             operation: viewStore.operation9 ?? .noOperation)
         InjectedFunctionBuilder(
-            state: stateSubject,
+            stateSignal: stateSignal,
             operation: viewStore.operation10 ?? .noOperation)
     }
     
-    init(store: ButtonViewStore,
-         stateSubject: StateSignal
+    init(viewStore: ButtonViewStore,
+         stateSignal: StateSignal
     ) {
-        self.stateSubject = stateSubject
-        self.viewStore = store
-        self.state = stateSubject.value
+        self.stateSignal = stateSignal
+        self.viewStore = viewStore
+        self.state = stateSignal.value
         
-        stateSubject
+        stateSignal
             .eraseToAnyPublisher()
             .removeDuplicates()
             .map({
@@ -68,8 +68,8 @@ class ButtonStore: ObservableObject {
     }
     
     public func didCommitAction() {
-        if let state = action.state {
-            stateSubject.send(state.value)
+        if let state = action.stateSignal {
+            stateSignal.send(state.value)
         }
     }
 }

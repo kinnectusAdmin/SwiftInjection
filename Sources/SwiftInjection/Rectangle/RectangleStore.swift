@@ -8,10 +8,10 @@
 import Foundation
 
 final class RectangleStore: ObservableObject {
-    let viewStore: RectangleViewStore, stateSubject: StateSignal
+    let viewStore: RectangleViewStore, stateSignal: StateSignal
     
-    init(viewStore: RectangleViewStore, stateSubject: StateSignal) {
+    init(viewStore: RectangleViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
+        self.stateSignal = stateSignal
     }
 }

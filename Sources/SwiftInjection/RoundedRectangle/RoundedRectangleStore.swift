@@ -11,16 +11,16 @@ import SwiftUI
 
 final class RoundedRectangleStore: ObservableObject {
     let viewStore: RoundedRectangleViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     @Published var state: InjectedState
     @Published var roundedRectangleResult: RoundedRectangleResult = .cornerRadius(0)
     
-    init(viewStore: RoundedRectangleViewStore, stateSubject: StateSignal) {
+    init(viewStore: RoundedRectangleViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.state = stateSubject.value
-        self.stateSubject = stateSubject
+        self.state = stateSignal.value
+        self.stateSignal = stateSignal
         
-        stateSubject.eraseToAnyPublisher().assign(to: &$state)
+        stateSignal.eraseToAnyPublisher().assign(to: &$state)
         
         $state.map { state -> RoundedRectangleResult in
             

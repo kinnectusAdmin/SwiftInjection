@@ -1,5 +1,5 @@
 //
-//  File 12.swift
+//  GridStore.swift
 //  
 //
 //  Created by Blake Osonduagwueki on 10/6/23.
@@ -13,16 +13,16 @@ class GridStore: ObservableObject {
     @Published var state: InjectedState
     private var cancellables = Set<AnyCancellable>()
     @Published var gridComposition: GridComposition = .standard
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     let viewStore: GridViewStore
     
     init(viewStore: GridViewStore,
-         stateSubject: StateSignal) {
+         stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
         
-        stateSubject
+        stateSignal
             .eraseToAnyPublisher()
             .map({ $0 })
             .assign(to: &$state)

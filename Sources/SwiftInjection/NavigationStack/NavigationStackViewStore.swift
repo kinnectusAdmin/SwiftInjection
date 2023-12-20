@@ -7,8 +7,14 @@
 
 import Foundation
 
-public struct NavigationStackViewStore: Codable, Identifiable {
-    public var id: String = ""
-    var modifiers: [InjectedModifier]
+public struct NavigationStackViewStore: Codable {
+    public var id: String
+    public var modifiers: [InjectedModifier]
     var root: InjectedView
+    
+    init(id: String = "", modifiers: [InjectedModifier] = [], root: InjectedView) {
+        self.id = id
+        self.modifiers = modifiers
+        self.root = root
+    }
 }

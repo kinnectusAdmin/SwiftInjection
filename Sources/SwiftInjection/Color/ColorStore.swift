@@ -11,25 +11,25 @@ class ColorStore: ObservableObject {
     
     @Published var color: Color = .white
     @Published var viewStore: ColorViewStore
-    @Published var stateSubject: StateSignal
+    @Published var stateSignal: StateSignal
     @Published var state: InjectedState
 
-    init(store: ColorViewStore, state: StateSignal) {
-        self.viewStore = store
-        self.stateSubject = state
-        self.state = state.value
-        if let colorValue = findStringValue(stateId: state.value.id, id: store.id, state: state.value) {
+    init(viewStore: ColorViewStore, stateSignal: StateSignal) {
+        self.viewStore = viewStore
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
+        if let colorValue = findStringValue(stateId: stateSignal.value.id, id: viewStore.id, state: stateSignal.value) {
             self.color = Color(UIColor.hex(colorValue))
         } else {
             self.color = Color(UIColor.hex(viewStore.colorKey))
         }
-        stateSubject
+        stateSignal
             .eraseToAnyPublisher()
             .map({ $0 })
             .assign(to: &$state)
 
         $state
-            .map { findStringValue(stateId: $0.id, id: store.colorKey, state: $0) }
+            .map { findStringValue(stateId: $0.id, id: viewStore.colorKey, state: $0) }
         .compactMap {$0}
         .map { Color(UIColor.hex($0))}
         .assign(to: &$color)

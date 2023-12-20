@@ -19,22 +19,22 @@ public struct ImageInsertable: View {
         case let .system(name):
             Image(systemName: name)
                 .addModifiers(modifiers: store.viewStore.modifiers,
-                              state: store.stateSubject,
+                              state: store.stateSignal,
                               container: container)
         case let .local(name):
             Image(name)
                 .addModifiers(modifiers: store.viewStore.modifiers,
-                              state: store.stateSubject,
+                              state: store.stateSignal,
                               container: container)
         case let .async(url, scale, placeholder):
             if let placeholder = placeholder {
                 AsyncImage(url: url, scale: CGFloat(scale)) { image in
                     image
                         .addModifiers(modifiers: store.viewStore.modifiers,
-                                      state: store.stateSubject,
+                                      state: store.stateSignal,
                                       container: container)
                 } placeholder: {
-                    Insertable(state: store.stateSubject, container: container, viewStore: placeholder)
+                    Insertable(stateSignal: store.stateSignal, container: container, viewStore: placeholder).eraseToAnyView()
                 }
             } else {
                 AsyncImage(url: url, scale: CGFloat(scale))

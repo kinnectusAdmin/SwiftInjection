@@ -15,13 +15,13 @@ struct CapsuleInsertable: View {
         if let style = store.viewStore.style {
             
             Capsule(style: style.render)
-                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSubject, container: container)
+                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSignal, container: container)
                 .eraseToAnyView()
 
         } else {
             
             Capsule()
-                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSubject, container: container)
+                .addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSignal, container: container)
                 .eraseToAnyView()
         }
     }

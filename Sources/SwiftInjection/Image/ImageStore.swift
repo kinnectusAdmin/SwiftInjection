@@ -12,45 +12,45 @@ class ImageStore: ObservableObject {
     @Published var state: InjectedState
     @Published var imageResult: ImageResult = .none
     let viewStore: ImageViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     
-    init(store: ImageViewStore, stateSubject: StateSignal) {
-        self.viewStore = store
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
+    init(viewStore: ImageViewStore, stateSignal: StateSignal) {
+        self.viewStore = viewStore
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
 
         $state.map { state -> ImageResult in
-            if let imageKey = store.nameKey, let name = findStringValue(stateId: state.id, id: imageKey, state: state){
+            if let imageKey = viewStore.nameKey, let name = findStringValue(stateId: state.id, id: imageKey, state: state){
                 return .local(name: name)
-            } else if let name = store.name {
+            } else if let name = viewStore.name {
                 return .local(name: name)
-            } else if let imageKey = store.systemNameKey, let systemName = findStringValue(stateId: state.id, id: imageKey, state: state) {
+            } else if let imageKey = viewStore.systemNameKey, let systemName = findStringValue(stateId: state.id, id: imageKey, state: state) {
                 return .system(name: systemName)
-            } else if let systemName = store.systemName {
+            } else if let systemName = viewStore.systemName {
                 return .system(name: systemName)
-            } else if let urlKey = store.urlKey, let url = findStringValue(stateId: state.id, id: urlKey, state: state) {
+            } else if let urlKey = viewStore.urlKey, let url = findStringValue(stateId: state.id, id: urlKey, state: state) {
                 var scale: Double {
-                    guard let scaleKey = store.scaleKey else {
-                        return store.scale
+                    guard let scaleKey = viewStore.scaleKey else {
+                        return viewStore.scale
                     }
-                    return findDoubleValue(stateId: state.id, id: scaleKey, state: state) ?? store.scale
+                    return findDoubleValue(stateId: state.id, id: scaleKey, state: state) ?? viewStore.scale
                 }
-                return .async(url: URL(string: url), scale: scale, placeholder: store.placeholder)
-            } else if let url = store.url {
+                return .async(url: URL(string: url), scale: scale, placeholder: viewStore.placeholder)
+            } else if let url = viewStore.url {
                 var scale: Double {
-                    guard let scaleKey = store.scaleKey else {
-                        return store.scale
+                    guard let scaleKey = viewStore.scaleKey else {
+                        return viewStore.scale
                     }
-                    return findDoubleValue(stateId: state.id, id: scaleKey, state: state) ?? store.scale
+                    return findDoubleValue(stateId: state.id, id: scaleKey, state: state) ?? viewStore.scale
                 }
-                return .async(url: URL(string: url), scale: scale, placeholder: store.placeholder)
+                return .async(url: URL(string: url), scale: scale, placeholder: viewStore.placeholder)
             } else {
                 return .system(name: "photo.artframe")
             }
         }
         .assign(to: &$imageResult)
         
-        stateSubject.eraseToAnyPublisher().assign(to: &$state)
+        stateSignal.eraseToAnyPublisher().assign(to: &$state)
     }
 }
 

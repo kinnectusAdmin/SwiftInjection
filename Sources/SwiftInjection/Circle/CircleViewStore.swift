@@ -8,6 +8,9 @@
 import Foundation
 
 public struct CircleViewStore: Codable {
-    var id: String = ""
-    var modifiers: [InjectedModifier] = []
+    public static func ==(lhs: CircleViewStore, rhs: CircleViewStore) -> Bool {
+        lhs.id == rhs.id
+    }
+    public var id: String = ""
+    public var modifiers: [InjectedModifier] = []
 }

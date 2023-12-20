@@ -10,10 +10,10 @@ import SwiftUI
 
 final class CircleStore: ObservableObject {
     let viewStore: CircleViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     
-    init(viewStore: CircleViewStore, stateSubject: StateSignal) {
+    init(viewStore: CircleViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
+        self.stateSignal = stateSignal
     }
 }

@@ -8,8 +8,8 @@
 import Foundation
 
 public struct SecureFieldViewStore: Codable {
-    var id: String = ""
-    var modifiers: [InjectedModifier]
+    public var id: String = ""
+    public var modifiers: [InjectedModifier] = []
     var titleKey: String? = nil
     var title: String = ""
     var textKey: String = ""

@@ -10,10 +10,10 @@ import SwiftUI
 
 final class EllipseStore: ObservableObject {
     let viewStore: EllipseViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     
-    init(viewStore: EllipseViewStore, stateSubject: StateSignal) {
+    init(viewStore: EllipseViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
+        self.stateSignal = stateSignal
     }
 }

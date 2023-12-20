@@ -10,9 +10,9 @@ import Combine
 
 class NavigationStackStore: ObservableObject {
     var viewStore: NavigationStackViewStore
-    var stateSubject: StateSignal
-    init(viewStore: NavigationStackViewStore, stateSubject: StateSignal) {
+    var stateSignal: StateSignal
+    init(viewStore: NavigationStackViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
+        self.stateSignal = stateSignal
     }
 }

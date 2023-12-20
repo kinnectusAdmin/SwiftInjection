@@ -12,7 +12,7 @@ struct CircleInsertable: View {
     @ObservedObject var store: CircleStore
     var container: ViewStoresContainer
     var body: some View {
-        Circle().addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSubject, container: container).eraseToAnyView()
+        Circle().addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSignal, container: container).eraseToAnyView()
     }
 }
 

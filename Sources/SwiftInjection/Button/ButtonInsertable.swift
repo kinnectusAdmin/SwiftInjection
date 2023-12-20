@@ -1,6 +1,5 @@
 //
 //  ButtonInsertable.swift
-//  Insertable
 //
 //  Created by Blake Osonduagwueki on 8/17/23.
 //
@@ -17,8 +16,8 @@ public struct ButtonInsertable: View {
         Button(action: {
             store.didCommitAction()
         }, label: {
-            Insertable(state: store.stateSubject, container: container, viewStore: store.viewStore.content)
-        }).addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)
+            Insertable(stateSignal: store.stateSignal, container: container, viewStore: store.viewStore.content)
+        }).addModifiers(mods: store.viewStore.modifiers, stateSignal: store.stateSignal, container: container)
     }
 }
 

@@ -7,8 +7,15 @@
 
 import Foundation
 
-public struct IfViewStore: Codable, Identifiable {
-    public var id: String = ""
-    var conditionKey: String = ""
-    var content: InjectedView 
+public struct IfViewStore: Codable {
+    public var id: String
+    public var modifiers: [InjectedModifier]
+    var conditionKey: String
+    var content: InjectedView
+    init(id: String = "", modifiers: [InjectedModifier], conditionKey: String = "", content: InjectedView) {
+        self.id = id
+        self.modifiers = modifiers
+        self.conditionKey = conditionKey
+        self.content = content
+    }
 }

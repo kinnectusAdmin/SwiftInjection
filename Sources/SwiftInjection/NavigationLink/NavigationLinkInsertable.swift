@@ -13,9 +13,9 @@ struct NavigationLinkInsertable: View {
     var container: ViewStoresContainer
     var body: some View {
         NavigationLink {
-            Insertable(state: store.stateSubject, container: container, viewStore: store.viewStore.destination)
+            Insertable(stateSignal: store.stateSignal, container: container, viewStore: store.viewStore.destination)
         } label: {
-            Insertable(state: store.stateSubject, container: container, viewStore: store.viewStore.label)
-        }.addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)
+            Insertable(stateSignal: store.stateSignal, container: container, viewStore: store.viewStore.label)
+        }.addModifiers(mods: store.viewStore.modifiers, stateSignal: store.stateSignal, container: container)
     }
 }

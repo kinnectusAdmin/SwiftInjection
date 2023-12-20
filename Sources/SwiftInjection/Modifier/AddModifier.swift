@@ -10,15 +10,15 @@ import SwiftUI
 
 public extension View {
     
-    func addModifier(injectedModifier: InjectedModifier, state: StateSignal, container: ViewStoresContainer) -> some View {
-        modifier(ModifierStore(modifier: injectedModifier, state: state, container: container))
+    func addModifier(injectedModifier: InjectedModifier, stateSignal: StateSignal, container: ViewStoresContainer) -> some View {
+        modifier(ModifierStore(modifier: injectedModifier, state: stateSignal, container: container))
     }
     
     
-    func addModifiers(mods: [InjectedModifier], state: StateSignal, container: ViewStoresContainer) -> some View {
+    func addModifiers(mods: [InjectedModifier], stateSignal: StateSignal, container: ViewStoresContainer) -> some View {
         return mods
             .reduce(AnyView(self), { accum, nextModifier -> AnyView in
-                accum.addModifier(injectedModifier: nextModifier, state: state, container: container).eraseToAnyView()
+                accum.addModifier(injectedModifier: nextModifier, stateSignal: stateSignal, container: container).eraseToAnyView()
             })
     }
 }

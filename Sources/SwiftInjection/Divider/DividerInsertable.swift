@@ -13,6 +13,6 @@ struct DividerInsertable: View {
     var container: ViewStoresContainer
     
     var body: some View {
-        Divider().addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)
+        Divider().addModifiers(mods: store.viewStore.modifiers, stateSignal: store.stateSignal, container: container)
     }
 }

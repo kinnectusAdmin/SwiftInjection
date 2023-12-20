@@ -1,5 +1,5 @@
 //
-//  File 3.swift
+//  ProgressStore.swift
 //  
 //
 //  Created by Blake Osonduagwueki on 10/9/23.
@@ -10,16 +10,16 @@ import SwiftUI
 
 final class ProgressStore: ObservableObject {
     let viewStore: ProgressViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     @Published var state: InjectedState
     @Published var composition: ProgressViewComposition = .standard
     
-    init(viewStore: ProgressViewStore, stateSubject: StateSignal) {
+    init(viewStore: ProgressViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
         
-        stateSubject.eraseToAnyPublisher().assign(to: &$state)
+        stateSignal.eraseToAnyPublisher().assign(to: &$state)
         
         $state.map { state -> ProgressViewComposition in
             switch viewStore.composition {
@@ -66,7 +66,7 @@ final class ProgressStore: ObservableObject {
     }
 }
 extension ProgressStore {
-    enum ProgressViewComposition: Codable {
+    enum ProgressViewComposition {
         case standard
         case title(title: String)
         case title_value(title: String, value: Double, total: Double)
@@ -82,4 +82,5 @@ extension ProgressStore {
         case value_total_label(value: Double, total: Double, label: InjectedView)
         case value_total_label_currentValueLabel(value: Double, total: Double, label: InjectedView, currentValueLabel: InjectedView)
     }
+    
 }

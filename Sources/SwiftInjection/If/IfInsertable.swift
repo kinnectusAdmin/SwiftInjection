@@ -14,10 +14,7 @@ public struct IfInsertable: View {
     
     public var body: some View {
         if store.condition {
-            Insertable(
-                state: store.stateSubject,
-                container: container,
-                viewStore: store.viewStore.content)
+            Insertable(stateSignal: store.stateSignal, container: container, viewStore: store.viewStore.content)
         }
     }
 }

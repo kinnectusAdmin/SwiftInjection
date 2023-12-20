@@ -15,11 +15,8 @@ public struct ListInsertable: View {
 
     public var body: some View {
         List(store.listStates, id: \.self) { itemState in
-           Insertable(
-            state: store.stateForItem(itemState),
-            container: container,
-            viewStore: store.viewStore.content)
+            Insertable(stateSignal: store.stateSignal, container: container, viewStore: store.viewStore.content)
         }
-        .addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)
+        .addModifiers(mods: store.viewStore.modifiers, stateSignal: store.stateSignal, container: container)
     }
 }

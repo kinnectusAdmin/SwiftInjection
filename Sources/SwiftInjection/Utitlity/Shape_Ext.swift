@@ -27,6 +27,6 @@ extension Shape {
             default:
                 return partialResult
             }
-        }.addModifiers(mods: modifiers, state: state, container: container)
+        }.addModifiers(mods: modifiers, stateSignal: state, container: container)
     }
 }

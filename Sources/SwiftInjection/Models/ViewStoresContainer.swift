@@ -8,11 +8,8 @@
 import Foundation
 
 public struct ViewStoresContainer: Codable {
-    let viewStores: [InjectedView]
+    var viewStores: [InjectedView] = []
     public var entry: InjectedView? {
         viewStores.first(where: {$0.id == "entry"})
-    }
-    public init(viewStores: [InjectedView]) {
-        self.viewStores = viewStores
     }
 }

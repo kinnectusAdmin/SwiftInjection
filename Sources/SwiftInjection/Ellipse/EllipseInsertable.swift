@@ -13,7 +13,7 @@ struct EllipseInsertable: View {
     var container: ViewStoresContainer
     var body: some View {
         
-        Ellipse().addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSubject, container: container).eraseToAnyView()
+        Ellipse().addShapeModifiers(modifiers: store.viewStore.modifiers, state: store.stateSignal, container: container).eraseToAnyView()
     }
 }
 

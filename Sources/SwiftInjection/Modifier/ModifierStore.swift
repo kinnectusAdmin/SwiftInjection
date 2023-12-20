@@ -83,13 +83,14 @@ struct ModifierStore: ViewModifier {
             }
         case let .background(viewStore, alignment):
                 return AnyView(
-                    content.background(Insertable(state: state, container: container, viewStore: viewStore), alignment: (alignment ?? .center).render)
+                    
+                    content.background(Insertable(stateSignal: state, container: container, viewStore: viewStore), alignment: (alignment ?? .center).render)
                 )
         case let .fullScreenCover(stateId, viewStore, isPresentedKey):
             if let isPresented = findBooleanValue(stateId: stateId, id: isPresentedKey, state: state.value) {
                 return AnyView(
                     content.fullScreenCover(isPresented: .constant(isPresented), content: {
-                        Insertable(state: state, container: container, viewStore: viewStore)
+                        Insertable(stateSignal: state, container: container, viewStore: viewStore)
                     })
                 )
             } else {
@@ -99,7 +100,7 @@ struct ModifierStore: ViewModifier {
             if let isPresented = findBooleanValue(stateId: stateId, id: isPresentedKey, state: state.value) {
                 return AnyView(
                     content.sheet(isPresented: .constant(isPresented), content: {
-                        Insertable(state: state, container: container, viewStore: viewStore)
+                        Insertable(stateSignal: state, container: container, viewStore: viewStore)
                     })
                 )
             } else {
@@ -125,13 +126,13 @@ struct ModifierStore: ViewModifier {
             if let isPresented = findBooleanValue(stateId: stateId, id: isPresentedKey, state: state.value), let visibility = titleVisibility {
                 return AnyView(
                     content.confirmationDialog(title, isPresented: .constant(isPresented), titleVisibility: visibility.render, actions: {
-                        Insertable(state: state, container: container, viewStore: actions)
+                        Insertable(stateSignal: state, container: container, viewStore: actions)
                     })
                 )
             } else if let isPresented = findBooleanValue(stateId: stateId, id: isPresentedKey, state: state.value) {
                 return AnyView(
                     content.confirmationDialog(title, isPresented: .constant(isPresented), actions: {
-                        Insertable(state: state, container: container, viewStore: actions)
+                        Insertable(stateSignal: state, container: container, viewStore: actions)
                     })
                 )
             } else {
@@ -146,21 +147,21 @@ struct ModifierStore: ViewModifier {
                                         attachmentAnchor: anchor.render,
                                         arrowEdge: edge.render,
                                         content: {
-                                            Insertable(state: state, container: container, viewStore: injectedContent)
+                                            Insertable(stateSignal: state, container: container, viewStore: injectedContent)
                                         }
                                        )
                     )
                 case (.none, .some(let edge)):
                     return AnyView(content.popover(isPresented: .constant(isPresented), arrowEdge: edge.render, content: {
-                        Insertable(state: state, container: container, viewStore: injectedContent)
+                        Insertable(stateSignal: state, container: container, viewStore: injectedContent).eraseToAnyView()
                     }))
                 case (.some(let anchor), .none):
                     return AnyView(content.popover(isPresented: .constant(isPresented), attachmentAnchor: anchor.render, content: {
-                        Insertable(state: state, container: container, viewStore: injectedContent)
+                        Insertable(stateSignal: state, container: container, viewStore: injectedContent).eraseToAnyView()
                     }))
                 case (.none, .none):
                     return AnyView(content.popover(isPresented: .constant(isPresented), content: {
-                        Insertable(state: state, container: container, viewStore: injectedContent)
+                        Insertable(stateSignal: state, container: container, viewStore: injectedContent).eraseToAnyView()
                     }))
                 }
             } else {
@@ -639,7 +640,7 @@ struct ModifierStore: ViewModifier {
             }
         case let .tabItem(item):
             return AnyView(content.tabItem({
-                Insertable(state: state, container: container, viewStore: item)
+                Insertable(stateSignal: state, container: container, viewStore: item).eraseToAnyView()
             }))
         case let .keyboardType(keyboard):
             return AnyView(content.keyboardType(keyboard.render))

@@ -13,7 +13,7 @@ struct NavigationStackInsertable: View {
     var container: ViewStoresContainer
     var body: some View {
         NavigationStack(root: {
-            Insertable(state: store.stateSubject, container: container, viewStore: store.viewStore.root)
-        }).addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)
+            Insertable(stateSignal: store.stateSignal, container: container, viewStore: store.viewStore.root)
+        }).addModifiers(mods: store.viewStore.modifiers, stateSignal: store.stateSignal, container: container)
     }
 }

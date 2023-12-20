@@ -15,24 +15,24 @@ class HStackStore: ObservableObject {
     @Published var alignment: VerticalAlignment = .center
     
     private var cancellables = Set<AnyCancellable>()
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     let viewStore: HStackViewStore
   
-    init(store: HStackViewStore,
-         stateSubject: StateSignal) {
-        self.viewStore = store
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
+    init(viewStore: HStackViewStore,
+         stateSignal: StateSignal) {
+        self.viewStore = viewStore
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
         
-        stateSubject.eraseToAnyPublisher().assign(to: &$state)
+        stateSignal.eraseToAnyPublisher().assign(to: &$state)
         
         $state.map { state in
-            let alignment = findStringValue(stateId: state.id, id: store.alignmentKey, state: state) ?? ""
+            let alignment = findStringValue(stateId: state.id, id: viewStore.alignmentKey, state: state) ?? ""
             return InjectedVerticalAlignment(rawValue: alignment)?.render ?? .center
         }.compactMap { $0 }.assign(to: &$alignment)
 
         $state.map { state in
-            if let spacing = findDoubleValue(stateId: state.id, id: store.spacingKey, state: state) {
+            if let spacing = findDoubleValue(stateId: state.id, id: viewStore.spacingKey, state: state) {
                 return CGFloat(spacing)
             } else {
                 return nil

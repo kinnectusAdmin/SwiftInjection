@@ -1,5 +1,5 @@
 //
-//  File 2.swift
+//  ProgressViewStore.swift
 //  
 //
 //  Created by Blake Osonduagwueki on 10/9/23.
@@ -8,9 +8,14 @@
 import Foundation
 
 public struct ProgressViewStore: Codable {
-    var id: String = ""
-    var modifiers: [InjectedModifier] = []
+    public var id: String = ""
+    public var modifiers: [InjectedModifier] = []
     var composition: ProgressViewComposition
+    init(id: String = "", modifiers: [InjectedModifier] = [], composition: ProgressViewComposition) {
+        self.id = id
+        self.modifiers = modifiers
+        self.composition = composition
+    }
 }
 
 extension ProgressViewStore {

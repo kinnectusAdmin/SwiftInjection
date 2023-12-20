@@ -16,7 +16,7 @@ class TextFieldStore: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     let viewStore: FieldViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     
     var textBinding: Binding<String> {
         .init(
@@ -26,23 +26,23 @@ class TextFieldStore: ObservableObject {
             set: {[weak self] text in
                 guard let self = self else { return }
                 let state = updateState(state: self.state, newValue: .string(stateId: self.state.id, id: self.viewStore.textKey, value: text))
-                self.stateSubject.send(state)
+                self.stateSignal.send(state)
             }
         )
     }
     
-    init(store: FieldViewStore, stateSubject: StateSignal) {
-        self.viewStore = store
-        self.state = stateSubject.value
-        self.stateSubject = stateSubject
+    init(viewStore: FieldViewStore, stateSignal: StateSignal) {
+        self.viewStore = viewStore
+        self.state = stateSignal.value
+        self.stateSignal = stateSignal
         
-        stateSubject
+        stateSignal
             .eraseToAnyPublisher()
             .map({ $0 })
             .assign(to: &$state)
         
         $state
-        .map { findStringValue(stateId: $0.id, id: store.textKey, state: $0)}
+        .map { findStringValue(stateId: $0.id, id: viewStore.textKey, state: $0)}
         .compactMap { $0 }
         .assign(to: &$text)
 

@@ -14,34 +14,34 @@ struct GridRowInsertable: View {
     var container: ViewStoresContainer
     var gridRowContent: some View {
         Group {
-            Insertable(state: store.stateSubject, container: container, viewStore: store.viewStore.content1)
+            Insertable(stateSignal: store.stateSignal, container: container, viewStore: store.viewStore.content1).eraseToAnyView()
             
             if let content = store.viewStore.content2 {
-                Insertable(state: store.stateSubject, container: container, viewStore: content)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: content).eraseToAnyView()
             }
             if let content = store.viewStore.content3 {
-                Insertable(state: store.stateSubject, container: container, viewStore: content)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: content).eraseToAnyView()
             }
             if let content = store.viewStore.content4 {
-                Insertable(state: store.stateSubject, container: container, viewStore: content)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: content).eraseToAnyView()
             }
             if let content = store.viewStore.content5 {
-                Insertable(state: store.stateSubject, container: container, viewStore: content)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: content).eraseToAnyView()
             }
             if let content = store.viewStore.content6 {
-                Insertable(state: store.stateSubject, container: container, viewStore: content)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: content).eraseToAnyView()
             }
             if let content = store.viewStore.content7 {
-                Insertable(state: store.stateSubject, container: container, viewStore: content)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: content).eraseToAnyView()
             }
             if let content = store.viewStore.content8 {
-                Insertable(state: store.stateSubject, container: container, viewStore: content)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: content).eraseToAnyView()
             }
             if let content = store.viewStore.content9 {
-                Insertable(state: store.stateSubject, container: container, viewStore: content)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: content).eraseToAnyView()
             }
             if let content = store.viewStore.content10 {
-                Insertable(state: store.stateSubject, container: container, viewStore: content)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: content).eraseToAnyView()
             }
         }
     }

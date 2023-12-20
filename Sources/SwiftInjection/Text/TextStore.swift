@@ -13,19 +13,18 @@ class TextStore: ObservableObject {
     @Published var state: InjectedState
     @Published var text: String = ""
     
-    private var cancellables = Set<AnyCancellable>()
     let viewStore: TextViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     
-    init(stateSubject: StateSignal, store: TextViewStore) {
-        self.viewStore = store
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
+    init(viewStore: TextViewStore, stateSignal: StateSignal) {
+        self.viewStore = viewStore
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
         
-        stateSubject.eraseToAnyPublisher().assign(to: &$state)
+        stateSignal.eraseToAnyPublisher().assign(to: &$state)
         
         $state
-            .map { findStringValue(stateId: $0.id, id: store.textKey, state: $0)}
+            .map { findStringValue(stateId: $0.id, id: viewStore.textKey, state: $0) ?? viewStore.text}
         .compactMap { $0 }
         .assign(to: &$text)
     }

@@ -15,12 +15,8 @@ public struct ForEachInsertable: View {
 
     public var body: some View {
         ForEach(store.forEachStates, id: \.self) { forEachState in
-            Insertable(
-                state: store.stateForItem(forEachState),
-                container: container,
-                viewStore: store.viewStore.content)
-            
+            Insertable(stateSignal: store.stateForItem(forEachState), container: container, viewStore: store.viewStore.content)
         }
-        .addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)
+        .addModifiers(mods: store.viewStore.modifiers, stateSignal: store.stateSignal, container: container)
     }
 }

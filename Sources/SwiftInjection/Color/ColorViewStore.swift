@@ -8,8 +8,8 @@
 import Foundation
 
 
-public struct ColorViewStore: Codable, Identifiable {
+public struct ColorViewStore: Codable {
     public var id: String = ""
-    var modifiers: [InjectedModifier] = []
+    public var modifiers: [InjectedModifier] = []
     var colorKey: String = ""
 }

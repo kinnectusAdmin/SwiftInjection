@@ -16,23 +16,23 @@ struct LabelInsertable: View {
         case let .titleImage(title, image):
             
             Label(title, image: image)
-                .addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)
+                .addModifiers(mods: store.viewStore.modifiers, stateSignal: store.stateSignal, container: container)
             
         case let .titleSystemImage(title, systemImage):
             
             Label(title, systemImage: systemImage)
-                .addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)
+                .addModifiers(mods: store.viewStore.modifiers, stateSignal: store.stateSignal, container: container)
             
         case let .titleIcon(title, icon):
             
             Label {
-                
-                Insertable(state: store.stateSubject, container: container, viewStore: title)
-                    .addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: title)
+                    .eraseToAnyView()
+                    .addModifiers(mods: store.viewStore.modifiers, stateSignal: store.stateSignal, container: container).eraseToAnyView()
             } icon: {
-                
-                Insertable(state: store.stateSubject, container: container, viewStore: icon)
-                    .addModifiers(mods: store.viewStore.modifiers, state: store.stateSubject, container: container)
+                Insertable(stateSignal: store.stateSignal, container: container, viewStore: icon)
+                    .eraseToAnyView()
+                    .addModifiers(mods: store.viewStore.modifiers, stateSignal: store.stateSignal, container: container).eraseToAnyView()
             }
 
         case .none:

@@ -10,12 +10,12 @@ import SwiftUI
 
 final class LazyHGridStore: ObservableObject {
     let viewStore: LazyHGridViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     var gridComposition: LazyHGridComposition
     
-    init(viewStore: LazyHGridViewStore, stateSubject: StateSignal) {
+    init(viewStore: LazyHGridViewStore, stateSignal: StateSignal) {
         self.viewStore = viewStore
-        self.stateSubject = stateSubject
+        self.stateSignal = stateSignal
         
         if let spacing = viewStore.spacing {
             self.gridComposition = .rows_alignment_spacing_pinnedViews(viewStore.rows, alignment: viewStore.verticalAlignment, spacing: spacing, pinnedViews: viewStore.pinnedViews)

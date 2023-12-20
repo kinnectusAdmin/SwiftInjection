@@ -14,24 +14,24 @@ class ZStackStore: ObservableObject {
     @Published var alignment: Alignment = .center
     private var cancellables = Set<AnyCancellable>()
     
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     let viewStore: ZStackViewStore
     
-    init(store: ZStackViewStore,
-         stateSubject: StateSignal) {
-        self.viewStore = store
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
+    init(viewStore: ZStackViewStore,
+         stateSignal: StateSignal) {
+        self.viewStore = viewStore
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
         
         
         
-        stateSubject
+        stateSignal
             .eraseToAnyPublisher()
             .map({ $0 })
             .assign(to: &$state)
         
         $state.map { state  -> Alignment in
-            let alignment = findStringValue(stateId: state.id, id: store.alignmentKey, state: state) ?? ""
+            let alignment = findStringValue(stateId: state.id, id: viewStore.alignmentKey, state: state) ?? ""
             return InjectedAlignment(rawValue: alignment)?.render ?? .center
         }.compactMap { $0 }.assign(to: &$alignment)
         

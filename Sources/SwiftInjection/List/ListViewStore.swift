@@ -7,9 +7,16 @@
 
 import Foundation
 
-public struct ListViewStore: Codable, Identifiable {
-    public var id: String = ""
-    var modifiers: [InjectedModifier] = []
-    var listKey: String = ""
-    var content: InjectedView = .empty()
+public struct ListViewStore: Codable {
+    public var id: String
+    public var modifiers: [InjectedModifier]
+    var listKey: String
+    var content: InjectedView
+    init(id: String = "", modifiers: [InjectedModifier] = [], listKey: String = "", content: InjectedView) {
+        self.id = id
+        self.modifiers = modifiers
+        self.listKey = listKey
+        self.content = content
+    }
+    
 }

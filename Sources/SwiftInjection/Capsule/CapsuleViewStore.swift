@@ -8,7 +8,10 @@
 import Foundation
 
 public struct CapsuleViewStore: Codable {
-    var id: String = ""
-    var modifiers: [InjectedModifier] = []
+    public static func ==(lhs: CapsuleViewStore, rhs: CapsuleViewStore) -> Bool {
+        lhs.id == rhs.id
+    }
+    public var id: String = ""
+    public var modifiers: [InjectedModifier] = []
     var style: InjectedRoundedCornerStyle? = nil
 }

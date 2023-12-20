@@ -15,29 +15,29 @@ class VStackStore: ObservableObject {
     @Published var alignment: HorizontalAlignment = .center
     private var cancellables = Set<AnyCancellable>()
     
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     let viewStore: VStackViewStore
     
-    init(store: VStackViewStore,
-         stateSubject: StateSignal) {
-        self.viewStore = store
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
+    init(viewStore: VStackViewStore,
+         stateSignal: StateSignal) {
+        self.viewStore = viewStore
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
         
         
         
-        stateSubject
+        stateSignal
             .eraseToAnyPublisher()
             .map({ $0 })
             .assign(to: &$state)
         
         $state.map { state in
-            let alignment = findStringValue(stateId: state.id, id: store.alignmentKey, state: state) ?? ""
+            let alignment = findStringValue(stateId: state.id, id: viewStore.alignmentKey, state: state) ?? ""
             return InjectedHorizontalAlignment(rawValue: alignment)?.render ?? .center
         }.compactMap { $0 }.assign(to: &$alignment)
         
         $state.map { state in
-            if let spacing = findDoubleValue(stateId: state.id, id: store.spacingKey, state: state) {
+            if let spacing = findDoubleValue(stateId: state.id, id: viewStore.spacingKey, state: state) {
                 return CGFloat(spacing)
             } else {
                 return nil

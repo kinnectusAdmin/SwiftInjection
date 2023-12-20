@@ -13,13 +13,13 @@ class SpacerStore: ObservableObject {
     @Published var state: InjectedState
     
     let viewStore: SpacerViewStore
-    let stateSubject: StateSignal
+    let stateSignal: StateSignal
     
-    init(store: SpacerViewStore, stateSubject: StateSignal) {
-        self.viewStore = store
-        self.stateSubject = stateSubject
-        self.state = stateSubject.value
+    init(viewStore: SpacerViewStore, stateSignal: StateSignal) {
+        self.viewStore = viewStore
+        self.stateSignal = stateSignal
+        self.state = stateSignal.value
         
-        stateSubject.eraseToAnyPublisher().assign(to: &$state)
+        stateSignal.eraseToAnyPublisher().assign(to: &$state)
     }
 }
